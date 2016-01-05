@@ -33,7 +33,7 @@ module.exports.connections = {
     adapter: 'sails-mongo',
     //host: 'localhost',
     //port: 27017,
-    url: 'mongodb://admin@ds061454.mongolab.com:61454/nmsystem',
+    url: 'mongodb://admin:admin@ds061454.mongolab.com:61454/nmsystem',
     // user: 'username',
     // password: 'password',
     // database: 'your_mongo_db_name_here'
