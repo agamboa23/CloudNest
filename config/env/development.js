@@ -17,8 +17,12 @@ module.exports = {
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
 
-  // models: {
-  //   connection: 'someMongodbServer'
-  // }
+   /**var ClLIENT_ID="431945613189-e2qo5i39p7mkrd3vlqgb59qme7e2pqmf.apps.googleusercontent.com";
+   var ClIENT_SECRET="vfw5Aon1hXEGo_chGH_7BisG";
+   var auth_provider_x509_cert_url="https://www.googleapis.com/oauth2/v1/certs";
+   var token_uri="https://accounts.google.com/o/oauth2/token";
+   var auth_uri="https://accounts.google.com/o/oauth2/auth";
+   var project_id="cloudnest-1166";
+	**/
 
 };

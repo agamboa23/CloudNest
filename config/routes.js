@@ -34,7 +34,7 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
-  }
+  },
 
   /***************************************************************************
   *                                                                          *
@@ -46,4 +46,16 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  '/driveauth': {
+    controller:'GoogleDriveController',
+    action: 'authorize'
+  },
+  '/oauth2callback': {
+    controller:'GoogleDriveController',
+    action: 'saveTokenFromCode'
+  },
+  'get /getResumableUploadLink': {
+    controller:'GoogleDriveController',
+    action: 'getResumableUploadLink'
+  }
 };

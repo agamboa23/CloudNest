@@ -19,7 +19,7 @@ module.exports = {
   	webSite: {
   		type: 'string'
   	},
-  	contactUser: {
+  	administrator: {
   		model: 'User'
   	},
   	regions:{
