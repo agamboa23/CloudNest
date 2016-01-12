@@ -54,7 +54,7 @@ module.exports.session = {
 
   // host: 'localhost',
   // port: 6379,
-  // ttl: <redis session TTL in seconds>,
+  ttl: 600,
   // db: 0,
   // pass: <redis auth password>,
   // prefix: 'sess:',
@@ -67,7 +67,10 @@ module.exports.session = {
   *                                                                          *
   ***************************************************************************/
 
-  // adapter: 'mongo',
+  adapter: 'mongo',
+  url: 'mongodb://admin:admin@ds061454.mongolab.com:61454/nmsystem',
+  user: 'username',
+  password: 'password',
   // host: 'localhost',
   // port: 27017,
   // db: 'sails',
