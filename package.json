@@ -24,7 +24,17 @@
     "sails-auth": "^1.3.1",
     "sails-disk": "~0.10.0",
     "sails-mongo": "0.11.5",
-    "uuid-v4": "~0.1.0"
+    "uuid-v4": "~0.1.0",
+    "bcryptjs": "^2.2",
+    "lodash": "^3.10",
+    "marlinspike": "^0.12",
+    "passport": "^0.3",
+    "passport-http": "^0.3",
+    "passport-local": "^1.0.0",
+    "https": "^1.0.0",
+    "querystring": "^0.2.0",
+    "googleapis": "^2.1.7",
+    "google-auth-library" : "^0.9.7"
   },
   "scripts": {
     "debug": "node debug app.js",
