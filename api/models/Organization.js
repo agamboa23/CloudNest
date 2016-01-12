@@ -7,6 +7,16 @@
 
 module.exports = {
 
+  types: {
+    is_google_account: function(account){
+        if (/^([A-Za-z0-9_\-\.])+\@([gmail|GMAIL])+\.(com)$/.test(account)) {
+          return true
+        }
+        else{
+          return false
+        }
+    }
+  },
   attributes: {
   	name: {
   		type: 'string'
@@ -14,7 +24,12 @@ module.exports = {
     email: {
       type: 'email',
       required: true,
-      unique: true
+      unique: true,
+      is_google_account: true
+    },
+    credentials: {
+      collection: 'Credential',
+      via: 'organization'
     },
   	webSite: {
   		type: 'string'
@@ -26,6 +41,5 @@ module.exports = {
   		collection: 'Region',
   		via: 'organization'
   	}
-
   }
 };

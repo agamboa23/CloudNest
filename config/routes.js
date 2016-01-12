@@ -63,10 +63,10 @@ module.exports.routes = {
   },
   '/oauth2callback': {
     controller:'GoogleDriveController',
-    action: 'saveTokenFromCode'
+    action: 'oauth2callback'
   },
-  'get /getResumableUploadLink': {
+  'get /getResumableUploadLocation': {
     controller:'GoogleDriveController',
-    action: 'getResumableUploadLink'
+    action: 'getResumableUploadLocation'
   }
 };

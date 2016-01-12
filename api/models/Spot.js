@@ -14,6 +14,15 @@ module.exports = {
     description: {
       type: 'string'
     },
+    space: {
+      type: 'string'
+    },
+    latitude: {
+      type: 'float'
+    },
+    longitude: {
+      type: 'float'
+    },
   	location: {
   		model: 'Location'
   	},

@@ -4,10 +4,15 @@
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
+var uuid = require('uuid-v4'); 
 
 module.exports = {
 
   attributes: {
+    sensorCode: {
+      type: 'string',
+      unique: true
+    },
     name: {
       type: 'string'
     },
@@ -18,10 +23,12 @@ module.exports = {
       type: 'string'
     },
     enable: {
-      type: 'boolean'
+      type: 'boolean',
+      defaultsTo: true
     },
     status: {
-      type: 'string'
+      type: 'string',
+      defaultsTo: "Just Registered"
     },
     lastSignal: {
       type: 'datetime'
@@ -35,5 +42,11 @@ module.exports = {
     dataStructure: {
       model: 'SensorData'
     }
+  },
+  beforeCreate: function (sensor, next) {
+    if (_.isEmpty(sensor.sensorCode)) {
+      sensor.sensorCode = uuid();
+    };
+    next();
   }
-};
+}

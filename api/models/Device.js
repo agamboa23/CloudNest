@@ -4,21 +4,24 @@
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
-
+var uuid = require('uuid-v4'); 
 module.exports = {
 
   attributes: {
     device_key: {
-      type: 'string'
+      type: 'string',
+      unique: true
     },
     deviceModel: {
       type: 'string'
     },
     enable: {
-      type: 'boolean'
+      type: 'boolean',
+      defaultsTo: true
     },
     status: {
-      type: 'string'
+      type: 'string',
+      defaultsTo: "Just Registered"
     },
     lastSignal: {
       type: 'datetime'
@@ -35,6 +38,16 @@ module.exports = {
     sensors: {
       collection: 'Sensor',
       via: 'device'
+    },
+    organization: {
+      model: 'Organization'
     }
+  },
+  beforeCreate: function (device, next) {
+    if (_.isEmpty(device.device_key)) {
+      device.device_key = uuid();
+    };
+    next();
   }
+
 };
