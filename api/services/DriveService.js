@@ -37,21 +37,25 @@ module.exports = {
                 sails.log('Error while trying to retrieve access token', err);
                 return;
             }
-            sails.models.credential.findOrCreate({organization:organizationId},
-            {type: "GoogleDrive",
-            access_token : token.access_token,
-            refresh_token : token.refresh_token,
-            organization : organizationId
-            }).exec(function createFindCB(err, record){
+
+            sails.models.credential.find({organization:organizationId, type: "GoogleDrive"}).exec(function (err, record){
                 if (err) {
                     sails.log('Error while saving the access token', err);
                     return;
                 };
+                if(!record){
+
+                    var newCredential = 
+                        {type: "GoogleDrive",
+                        access_token : token.access_token,
+                        refresh_token : token.refresh_token,
+                        organization : organizationId                        };
+                    sails.models.credential.create(newCredential)
+                };
                 if (record.access_token!=token.access_token){
                     sails.models.credential.update({organization:organizationId},
                         {access_token : token.access_token,
-                        refresh_token : token.refresh_token,
-                        organization : organizationId}).exec(function afterwards(err, updated){
+                        refresh_token : token.refresh_token}).exec(function afterwards(err, updated){
                             if (err){
                                 sails.log('Error while updating the access token', err);
                                 return;
@@ -64,8 +68,9 @@ module.exports = {
     getAccessToken: function(requiredUploadData, getLocation, refreshed, next){
 
         sails.models.device.find({device_key:requiredUploadData.deviceKey}).exec(function findCB(err, deviceFound){
-            sails.models.credential.find({organization:deviceFound.organization}).exec(function findCB(err, found){
+            sails.models.credential.find({organization:deviceFound.organization, type:"GoogleDrive"}).exec(function findCB(err, found){
                 requiredUploadData.token = found[0].access_token;
+                requiredUploadData.folderId = found[0].main_folder;
                 getLocation(requiredUploadData, refreshed, next);
             })
         })
@@ -191,7 +196,8 @@ module.exports = {
                     }
                 var post_data = JSON.stringify({
                 "title" : uploadRequiredData.uploadTitle,
-                "id" : bodyObject.ids[0]
+                "id" : bodyObject.ids[0],
+                "parents": [{"id":"0BxuA9mmIkzRCcW5rd3Z5aDVfWmM"}],
                 });
 
                 uploadRequiredData["drive_id"]=bodyObject.ids[0];
@@ -203,9 +209,8 @@ module.exports = {
                         'content-type': 'application/json; charset=UTF-8',
                         'content-length': post_data.length,
                         'authorization': 'Bearer ' + uploadRequiredData.token,
-                        'X-Upload-Content-Type': uploadRequiredData.uploadContentType,
-                        'X-Upload-Content-Length':  uploadRequiredData.uploadContentLength
-                       }
+                        'X-Upload-Content-Type': uploadRequiredData.uploadContentType
+                                               }
                 };
                 var post_req = http.request(post_options, function(driveRes) {
                     var chunks = [];
@@ -217,12 +222,37 @@ module.exports = {
                         if (driveRes.statusCode===200){
                             location= driveRes.headers.location;
                             if (location){
-                                delete uploadRequiredData["token"];
-                                sails.models.moduledata.create(uploadRequiredData).exec(function dataLogged(err, created) {
-                                })
                                 var locationResponse = JSON.stringify({
                                     location: location
                                 })
+                                var permission_options = {
+                                    host: 'www.googleapis.com',
+                                    path: '/drive/v2/files/'+bodyObject.ids[0]+'/permissions?key='+apiKey,
+                                    method: 'POST',
+                                    headers: {
+                                    'content-type': 'application/json; charset=UTF-8',
+                                    'authorization': 'Bearer ' + uploadRequiredData.token
+                                    }
+                                };
+                                var permission_post = JSON.stringify({
+                                "role" : "reader",
+                                "type" : "anyone"
+                                });
+                                delete uploadRequiredData["token"];
+                                sails.models.moduledata.create(uploadRequiredData).exec(function dataLogged(err, created) {
+                                })
+                                var post_perm = http.request(permission_options, function(permRes) {
+                                    var chunks_perm = [];
+                                    permRes.on("data", function (chunk) {
+                                        chunks_perm.push(chunk);
+                                    });
+                                    permRes.on("end", function (){
+                                        var body = Buffer.concat(chunks_perm);
+                                        sails.log(body.toString()+permission_options.path);
+                                    });
+                                })
+                                post_perm.write(permission_post);
+                                post_perm.end();
                                 next(null,locationResponse);
                             }
                             return;
@@ -244,7 +274,5 @@ module.exports = {
             });
         })
         getId_request.end();
-
-
     }
 }

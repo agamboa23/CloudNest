@@ -11,6 +11,9 @@ module.exports = {
   	type: {
   		type: 'string'
   	},
+    drive_folder: {
+      type: 'stirng'
+    },
     access_token: {
       type: 'string'
     },
