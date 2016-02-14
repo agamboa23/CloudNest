@@ -1,5 +1,5 @@
 /**
-* SensorData.js
+* ModuleData.js
 *
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
@@ -8,11 +8,14 @@
 module.exports = {
 
   attributes: {
-    sensor:{
-      model: 'Sensor'
+    module: {
+    	model: 'Module'
     },
-    sensorReading:{
+    data:{
 
+    },
+    readingTime:{
+    	type: 'datetime'
     }
   }
 };

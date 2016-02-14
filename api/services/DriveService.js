@@ -5,10 +5,10 @@ var querystring = require('querystring');
 var google = require('googleapis');
 var googleAuth = require('google-auth-library');
 var SCOPES = ['https://www.googleapis.com/auth/drive'];
-
 var clientId = sails.config.drive.clientId;
 var clientSecret = sails.config.drive.clientSecret;
 var redirectUrl = sails.config.drive.redirectUri;
+var apiKey = sails.config.drive.appKey;
 var auth = new googleAuth();
 var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
@@ -122,20 +122,35 @@ module.exports = {
         req.end();
     },
     getResumableUploadLocation: function(req, res, refreshed, next) {
-        var postRequiredData ={
-            uploadContentType : req.param('uploadContentType'),
-            uploadContentLength : req.param('uploadContentLength'),
-            uploadTitle : req.param('uploadTitle'),
-            deviceKey : req.param('deviceKey'),
-            originId : req.param('originId')
-        };
+        var key = req.param('moduleKey');
+        sails.models.module.findOne({module_key:key}).exec(function (err,moduleWithKey){
+            if (err){
+                return res.negotiate(err);
+            }
+            if(!moduleWithKey){
+                res.status(403).send({error: 'moduleKey not valid'});
+                return
+            }
+            if(!moduleWithKey.enable){
+                res.status(403).send({error: 'selected module is disabled'});
+            }
 
-        if (!(postRequiredData.uploadContentLength||postRequiredData.uploadContentType||postRequiredData.uploadTitle||postRequiredData.deviceKey)){
-            err="Incorrect Parameters";
-            next(err);
-            return;
-        }
-        this.getAccessToken(postRequiredData,this.getDriveUploadLocation, refreshed, next);
+            var postRequiredData ={
+            uploadContentType : req.body['uploadContentType'],
+            uploadContentLength : req.body['uploadContentLength'],
+            uploadTitle : req.body['uploadTitle'],
+            module : moduleWithKey.id,
+            moduleDataStructure : moduleWithKey.ModuleDataStructure
+            };
+
+            if (!(postRequiredData.uploadContentLength||postRequiredData.uploadContentType||postRequiredData.uploadTitle||postRequiredData.deviceKey)){
+                err="Incorrect Parameters";
+                next(err);
+                return;
+            }
+            sails.services.driveservice.getAccessToken(postRequiredData,sails.services.driveservice.getDriveUploadLocation, refreshed, next);
+        });
+        
     },
     getDriveUploadLocation : function (uploadRequiredData,refreshed,next){
         if (!uploadRequiredData.token){
@@ -143,50 +158,93 @@ module.exports = {
             next(err);
             return;
         };
-        var post_data = querystring.stringify({
-            "title" : uploadRequiredData.uploadTitle
-          });
+
+
         var location;
-        var post_options = {
+
+        var get_id_options = {
             host: 'www.googleapis.com',
-            path: '/upload/drive/v2/files?uploadType=resumable',
-            method: 'POST',
+            path: '/drive/v3/files/generateIds?count=1&key='+apiKey,
+            method: 'GET',
             headers: {
-                'content-type': 'application/json; charset=UTF-8',
-                'content-length': '0',
-                'authorization': 'Bearer ' + uploadRequiredData.token,
-                'X-Upload-Content-Type': uploadRequiredData.uploadContentType,
-                'X-Upload-Content-Length':  uploadRequiredData.uploadContentLength
-               }
-        };
-        var post_req = http.request(post_options, function(driveRes) {
-            var chunks = [];
-            driveRes.on("data", function (chunk) {
-                chunks.push(chunk);
+                'authorization' : 'Bearer ' + uploadRequiredData.token
+            }
+        }
+
+        var getId_request = http.request(get_id_options, function(response) {
+            var chunks_get = [];
+
+            response.on("data", function (chunk) {
+                chunks_get.push(chunk);
             });
 
-            driveRes.on("end", function () {
-                if (driveRes.statusCode===200){
-                    location= driveRes.headers.location;
-                    if (location){
-                        next(null,location);
-                    }
-                    return;
-                }
-                var recievedData = Buffer.concat(chunks);
-                var body = JSON.parse(recievedData.toString());
-                if (driveRes.statusCode===401 && !refreshed){
+            response.on("end", function () {
+                var body = Buffer.concat(chunks_get);
+                var bodyObject = JSON.parse(body.toString());
+                if( response.statusCode ===401 && !refreshed){
                     sails.services.driveservice.refreshAndRepost(uploadRequiredData,sails.services.driveservice.getDriveUploadLocation, true, next);
                     return;
-                };
-                if (driveRes.statusCode!=200){
-                    next(body,null);
-                    return;
                 }
-            });
+                if (response.statusCode!=200){
+                    next(body.toString(),null);
+                    return;
+                    }
+                var post_data = JSON.stringify({
+                "title" : uploadRequiredData.uploadTitle,
+                "id" : bodyObject.ids[0]
+                });
 
-        });
-        post_req.write(post_data);
-        post_req.end();
+                uploadRequiredData["drive_id"]=bodyObject.ids[0];
+                var post_options = {
+                    host: 'www.googleapis.com',
+                    path: '/upload/drive/v2/files?uploadType=resumable',
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json; charset=UTF-8',
+                        'content-length': post_data.length,
+                        'authorization': 'Bearer ' + uploadRequiredData.token,
+                        'X-Upload-Content-Type': uploadRequiredData.uploadContentType,
+                        'X-Upload-Content-Length':  uploadRequiredData.uploadContentLength
+                       }
+                };
+                var post_req = http.request(post_options, function(driveRes) {
+                    var chunks = [];
+                    driveRes.on("data", function (chunk) {
+                        chunks.push(chunk);
+                    });
+
+                    driveRes.on("end", function () {
+                        if (driveRes.statusCode===200){
+                            location= driveRes.headers.location;
+                            if (location){
+                                delete uploadRequiredData["token"];
+                                sails.models.moduledata.create(uploadRequiredData).exec(function dataLogged(err, created) {
+                                })
+                                var locationResponse = JSON.stringify({
+                                    location: location
+                                })
+                                next(null,locationResponse);
+                            }
+                            return;
+                        }
+                        var recievedData = Buffer.concat(chunks);
+                        var body = JSON.parse(recievedData.toString());
+                        if (driveRes.statusCode===401 && !refreshed){
+                            sails.services.driveservice.refreshAndRepost(uploadRequiredData,sails.services.driveservice.getDriveUploadLocation, true, next);
+                            return;
+                        };
+                        if (driveRes.statusCode!=200){
+                            next(body.toString(),null);
+                            return;
+                            }
+                        });
+                });
+                post_req.write(post_data);
+                post_req.end();
+            });
+        })
+        getId_request.end();
+
+
     }
 }

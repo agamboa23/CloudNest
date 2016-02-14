@@ -68,12 +68,12 @@ module.exports.session = {
   ***************************************************************************/
 
   adapter: 'mongo',
-  url: 'mongodb://admin:admin@ds061454.mongolab.com:61454/nmsystem',
-  user: 'username',
-  password: 'password',
-  // host: 'localhost',
-  // port: 27017,
-  // db: 'sails',
+  //url: 'mongodb://admin:admin@ds061454.mongolab.com:61454/nmsystem',
+  //usename: "admin",
+  //password: "admin",
+  host: 'localhost',
+  port: 27017,
+  db: 'sails',
   collection: 'sessions',
 
   /***************************************************************************

@@ -1,0 +1,27 @@
+<button class="btn btn-primary pull-right btn-sm RbtnMargin" ng-click="getLocations()" type="button">refresh</button>
+<button class="btn btn-primary pull-right btn-sm"  type="button">Edit</button>
+<div class="container-fluid">
+  <div class="container">
+	<div>
+	    <input type="number" min="1" max="100" class="form-control" ng-model="dataPerPage">
+	    <table class="mdl-data-table mdl-js-data-table">
+			<thead>
+				<tr>
+					<th class="mdl-data-table__cell--non-numeric">created At</th>
+					<th class="mdl-data-table__cell--non-numeric">craeted At</th>
+					<th class="mdl-data-table__cell--non-numeric">data</th>
+				</tr>
+			</thead>
+			<tbody>
+			    <tr dir-paginate="data in readings | itemsPerPage: dataPerPage" total-items="totalReadings" current-page="pagination.current">
+	      			<td class="mdl-data-table__cell--non-numeric">{{ data.createdAt }}</td>
+				    <td class="mdl-data-table__cell--non-numeric">{{ data.createdAt }}</td>
+				    <td class="mdl-data-table__cell--non-numeric">{{ data.data }}</td>
+				</tr>
+			</tbody>
+	    </table>
+
+	    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+	</div>
+  </div>
+</div>

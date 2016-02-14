@@ -74,7 +74,11 @@ module.exports = {
         // make sure the server always returns a response to the client
         // i.e passport-local bad username/email or password
         //res.forbidden(err);
-        res.redirect('/login');
+        var data = JSON.stringify({
+          error: "Wrong username and password combination"
+        });
+        res.send(data);
+        res.end();
       }
     }
 
@@ -100,7 +104,10 @@ module.exports = {
         }
 
         sails.log.info('user', user, 'authenticated successfully');
-        return res.json(user);
+        var data = JSON.stringify({
+          result:user
+        });
+        return res.send(data);
       });
     });
   },

@@ -35,8 +35,8 @@ module.exports = {
     configuration: {
       model: 'Configuration'
     },
-    sensors: {
-      collection: 'Sensor',
+    module: {
+      collection: 'Module',
       via: 'device'
     },
     organization: {

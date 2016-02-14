@@ -1,0 +1,59 @@
+<button class="btn btn-primary pull-right btn-sm RbtnMargin" ng-click="getLocations()" type="button">refresh</button>
+<button class="btn btn-primary pull-right btn-sm"  type="button" data-toggle="modal" data-target="#createModal">Create new</button>
+<div class="container-fluid">
+	Filter Location by Name:
+	<input type="search" ng-model="searchValue" placeholder="filter locations..." aria-label="filter locations" />
+	<div class="row">
+		<div class="panel-data animate-repeat col-lg-3 col-md-4 col-sm-6 col-xs-12"  ng-repeat="location in locations | filter:searchValue as results" >
+		  <div class="panel-heading">Location: {{location.name}}</div>
+		  <div class="panel-body">
+		    <p maxlength="50">Country: {{location.country}}</p>
+		    <p maxlength="50">state: {{location.state}}</p>
+		    <p maxlength="50">city: {{location.city}}</p>
+		  </div>
+		  <div class="panel-footer">
+		  	<button class="btn btn-primary btn-xs" ng-click="go('spots','/spots/'+location.id)" type="button">Open</button>
+		  	<button class="btn btn-primary btn-xs"  type="button">Change or Delete</button>
+		  </div>
+		</div>
+
+		<li ng-if="results.length == 0">
+		  <strong>No results found...</strong>
+		</li>
+	</div>
+</div>
+<div class="modal fade" id="createModal" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Location Register</h4>
+        </div>
+			<div class="modal-body">
+				<div class="container-fluid create-container">
+
+					<h2> Add a new Location!</h2>
+					<form class="create-form">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" ng-model="newLocation.name" type="text" id="regionName">
+							<label class="mdl-textfield__label" for="regionName">Name:</label>
+						</div>
+					  	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" ng-model="newLocation.description" type="text" id="regionDescription">
+							<label class="mdl-textfield__label" for="regionDescription">Description:</label>
+						</div>
+						<country-state-select country="newLocation.country" state="newLocation.state"></country-state-select>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" ng-model="newLocation.city" type="text" id="regionDescription">
+							<label class="mdl-textfield__label" for="regionDescription">City:</label>
+						</div>
+					</form>
+					<button data-dismiss="modal" ng-click="addLocation()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+					  Submit
+					</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>

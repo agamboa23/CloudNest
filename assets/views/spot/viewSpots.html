@@ -1,0 +1,84 @@
+<button class="btn btn-primary pull-right btn-sm RbtnMargin" ng-click="getLocations()" type="button">refresh</button>
+<button class="btn btn-primary pull-right btn-sm"  type="button" data-toggle="modal" ng-click="gmap.reloadMap()" data-target="#createModal">Create new</button>
+<div class="container-fluid">
+	Filter Spots by space identifier:
+	<input type="search" ng-model="searchValue" placeholder="filter spots..." aria-label="filter spots" />
+	<div class="row">
+		<div class="panel-data animate-repeat col-lg-3 col-md-4 col-sm-6 col-xs-12"  ng-repeat="spot in spots | filter:searchValue as results">
+		  <div class="panel-heading">Spot: {{spot.name}}</div>
+		  <div class="panel-body">
+		    <h3 maxlength="50">space: {{spot.space}}</h3>
+		    <p maxlength="50">description: {{spot.description}}</p>
+		  </div>
+		  <div class="panel-footer">
+		  	<button class="btn btn-primary btn-xs" ng-click="go('devices','/devices/'+spot.id)" type="button">Open</button>
+		  	<button class="btn btn-primary btn-xs" ng-click="refreshBreadCrumbs('home')" type="button">Change or Delete</button>
+		  </div>
+		</div>
+
+		<li ng-if="results.length == 0">
+		  <strong>No results found...</strong>
+		</li>
+	</div>
+</div>
+<div class="modal fade" id="createModal" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Spot Register</h4>
+        </div>
+			<div class="modal-body">
+				<div class="container-fluid create-container">
+
+					<h2> Add a new Spot!</h2>
+					<form class="create-form">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" ng-model="newSpot.name" type="text" id="spotName">
+							<label class="mdl-textfield__label" for="regionName">Name:</label>
+						</div>
+					  	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" ng-model="newSpot.space" type="text" id="spotSpace">
+							<label class="mdl-textfield__label" for="regionName">Description:</label>
+						</div>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" ng-model="newSpot.description" type="text" id="spotDescription">
+							<label class="mdl-textfield__label" for="regionName">Space:</label>
+						</div>
+						<h2> Geographic space: </h2>
+						<div class="text-right">
+						        <div class="input-append text-right">
+						            <input type="text" ng-model="search"/>
+						            <button  type="button" ng-click="geoCode()" ng-disabled="search.length == 0" title="search" >
+						              &nbsp;<i class="material-icons">search</i>
+						            </button>
+						            <button  type="button" ng-click="gotoCurrentLocation()" title="current location">
+						              &nbsp;<i class="material-icons">home</i>
+						            </button>
+						        </div>
+						    </div>
+
+						    <!-- map -->
+						    <app-map style="height:400px;margin:12px;box-shadow:0 3px 25px black;"
+						        center="loc"
+						        pinpoint="pinpoint"
+						        control="gmap"
+						        zoom="5"
+						    > 
+						    </app-map>
+
+						    <!-- current location -->
+						    <div class="text-info text-right">
+						        {{loc.lat | lat:0}}, {{loc.lon | lon:0}}
+						    </div>
+
+					</form>
+					<button data-dismiss="modal" ng-click="addSpot()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+					  Submit
+					</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>

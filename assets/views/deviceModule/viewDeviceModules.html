@@ -1,0 +1,63 @@
+<button class="btn btn-primary pull-right btn-sm RbtnMargin" ng-click="getLocations()" type="button">refresh</button>
+<button class="btn btn-primary pull-right btn-sm"  type="button" data-toggle="modal" data-target="#createModal">Create new</button>
+<div class="container-fluid">
+	Filter Modules by space identifier:
+	<input type="search" ng-model="searchValue" placeholder="filter modules..." aria-label="filter modules" />
+	<div class="row">
+		<div class="panel panel-default animate-repeat col-lg-3 col-md-4 col-sm-6 col-xs-12"  ng-repeat="deviceModule in deviceModules | filter:searchValue as results">
+		  <div class="panel-heading">Module: {{deviceModule.name}}</div>
+		  <div class="panel-body">
+		    <h4 maxlength="50">Model: {{deviceModule.model}}</h4>
+		    <p maxlength="50">Status: {{deviceModule.status}}</p>
+			<p maxlength="50">Enable: {{deviceModule.enable}}</p>
+		    <p maxlength="50">Key: {{deviceModule.module_key}}</p>
+		  </div>
+		  <div class="panel-footer">
+		  	<button class="btn btn-primary btn-xs" ng-click="go('data','/moduleData/'+deviceModule.id)" type="button">Data</button>
+		  	<button class="btn btn-primary btn-xs" ng-click="go('configuration','/configuration/'+deviceModule.id+'/module/'+deviceModule.configuration.id)" type="button">Configuration</button>
+		  	<button class="btn btn-primary btn-xs" ng-click="go('dataStructure','/dataStructure/'+deviceModule.id+'/'+deviceModule.ModuleDataStructure.id)" type="button">Data configuration</button>
+		  	<button class="btn btn-primary btn-xs" ng-click="go('data','/moduleData/'+deviceModule.id)" type="button">Edit/Delete</button>
+
+
+		  </div>
+		</div>
+
+		<li ng-if="results.length == 0">
+		  <strong>No results found...</strong>
+		</li>
+	</div>
+</div>
+<div class="modal fade" id="createModal" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Module Register</h4>
+        </div>
+			<div class="modal-body">
+				<div class="container-fluid create-container">
+
+					<h2> Add a new Module</h2>
+					<form class="create-form">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" ng-model="newModule.name" type="text" id="moduleName">
+							<label class="mdl-textfield__label" for="moduleName">Name: </label>
+						</div>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" ng-model="newModule.model" type="text" id="moduleModel">
+							<label class="mdl-textfield__label" for="moduleModel">Model:</label>
+						</div>
+					  	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" ng-model="newRegion.description" type="text" id="moduleDescription">
+							<label class="mdl-textfield__label" for="moduleDescription">Description:</label>
+						</div>
+					</form>
+					<button data-dismiss="modal" ng-click="addModule()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+					  Create
+					</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>

@@ -36,9 +36,7 @@ module.exports.routes = {
     view: 'homepage'
   },
   'post /register': 'UserController.create',
-  'get /login': {
-    view: 'auth/login'
-  },
+
   'get /logout': 'AuthController.logout',
 
   'post /auth/local': 'AuthController.callback',
@@ -65,8 +63,36 @@ module.exports.routes = {
     controller:'GoogleDriveController',
     action: 'oauth2callback'
   },
-  'get /getResumableUploadLocation': {
+  'post /getResumableUploadLocation/:moduleKey': {
     controller:'GoogleDriveController',
     action: 'getResumableUploadLocation'
+  },
+  'post /postData/:moduleKey':{
+    controller: 'InterfaceController',
+    action: 'postData'
+  },
+  'post /setDeviceConfiguration/:deviceKey':{
+    controller: 'InterfaceController',
+    action: 'setDeviceConfiguration'
+  },
+  'post /updateDeviceConfiguration/:deviceKey':{
+    controller: 'InterfaceController',
+    action: 'updateDeviceConfiguration'
+  },
+    'get /getDeviceConfiguration/:deviceKey':{
+    controller: 'InterfaceController',
+    action: 'getDeviceConfiguration'
+  },
+  'post /setModuleConfiguration/:moduleKey':{
+    controller: 'InterfaceController',
+    action: 'setModuleConfiguration'
+  },
+  'post /updateModuleConfiguration/:moduleKey':{
+    controller: 'InterfaceController',
+    action: 'updateModuleConfiguration'
+  },
+  'get /getModuleConfiguration/:moduleKey':{
+    controller: 'InterfaceController',
+    action: 'getModuleConfiguration'
   }
 };
