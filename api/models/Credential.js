@@ -12,7 +12,7 @@ module.exports = {
   		type: 'string'
   	},
     drive_folder: {
-      type: 'stirng'
+      type: 'string'
     },
     access_token: {
       type: 'string'
