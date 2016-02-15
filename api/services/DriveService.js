@@ -55,6 +55,7 @@ module.exports = {
                     path: '/drive/v2/files?key='+apiKey,
                     method: 'POST',
                     headers: {
+                        'content-type': 'application/json; charset=UTF-8',
                         'authorization': 'Bearer ' + token.access_token,
                         }
                     };
@@ -68,7 +69,7 @@ module.exports = {
                     response.on("end", function () {
                         var body = Buffer.concat(chunks_get);
                         var bodyObject = JSON.parse(body.toString());
-                        sails.log(body.toString() + response.statusCode)
+                        sails.log(bodyObject.id.toString())
                         var newCredential = 
                             {type: "GoogleDrive",
                             access_token : token.access_token,
