@@ -38,21 +38,18 @@ module.exports = {
                 return;
             }
 
-            sails.models.credential.find({organization:organizationId, type: "GoogleDrive"}).exec(function (err, record){
+            sails.models.credential.findOne({organization:organizationId, type: "GoogleDrive"}).exec(function (err, record){
                 if (err) {
                     sails.log('Error while saving the access token', err);
                     return;
                 };
-                sails.log("todo bien");
-                sails.log(record);
                 if(!record){
-                    sails.log("aqui lo crea");
                     var newCredential = 
                         {type: "GoogleDrive",
                         access_token : token.access_token,
                         refresh_token : token.refresh_token,
                         organization : organizationId                        };
-                    sails.models.credential.create(newCredential).exec(function (err,created){sails.log("created")})
+                    sails.models.credential.create(newCredential).exec(function (err,created){sails.log("Credential created")})
                     return;
                 };
                 if (record.access_token!=token.access_token){
