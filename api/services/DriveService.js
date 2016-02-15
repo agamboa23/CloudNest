@@ -58,7 +58,7 @@ module.exports = {
                         'authorization': 'Bearer ' + token.access_token,
                         }
                     };
-                    var create_folder = http.request(get_id_options, function(response) {
+                    var create_folder = http.request(post_options, function(response) {
                     var chunks_get = [];
 
                     response.on("data", function (chunk) {
