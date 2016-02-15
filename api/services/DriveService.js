@@ -44,12 +44,68 @@ module.exports = {
                     return;
                 };
                 if(!record){
-                    var newCredential = 
-                        {type: "GoogleDrive",
-                        access_token : token.access_token,
-                        refresh_token : token.refresh_token,
-                        organization : organizationId                        };
-                    sails.models.credential.create(newCredential).exec(function (err,created){sails.log("Credential created")})
+
+                    var post_data = JSON.stringify({
+                    "title" : "CloudNest",
+                    "mimeType": "application/vnd.google-apps.folder"
+                    });
+
+                    var post_options = {
+                    host: 'www.googleapis.com',
+                    path: '/drive/v2/files?key='+apiKey,
+                    method: 'POST',
+                    headers: {
+                        'authorization': 'Bearer ' + token.access_token,
+                        }
+                    };
+                    var create_folder = http.request(get_id_options, function(response) {
+                    var chunks_get = [];
+
+                    response.on("data", function (chunk) {
+                        chunks_get.push(chunk);
+                    });
+
+                    response.on("end", function () {
+                        var body = Buffer.concat(chunks_get);
+                        var bodyObject = JSON.parse(body.toString());
+                        var newCredential = 
+                            {type: "GoogleDrive",
+                            access_token : token.access_token,
+                            refresh_token : token.refresh_token,
+                            organization : organizationId,
+                            drive_folder : bodyObject.id
+                            };
+                        sails.models.credential.create(newCredential).exec(function (err,created){sails.log("Credential created")});
+                        var permission_options = {
+                            host: 'www.googleapis.com',
+                            path: '/drive/v2/files/'+created.drive_folder+'/permissions?key='+apiKey,
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json; charset=UTF-8',
+                                'authorization': 'Bearer ' + uploadRequiredData.token
+                                }
+                        };
+                        var permission_post = JSON.stringify({
+                            "role" : "reader",
+                            "type" : "anyone"
+                        });
+                        var post_perm = http.request(permission_options, function(permRes) {
+                            var chunks_perm = [];
+                            permRes.on("data", function (chunk) {
+                                chunks_perm.push(chunk);
+                            });
+                            permRes.on("end", function (){
+                                var body = Buffer.concat(chunks_perm);
+                                sails.log(body.toString());
+                            });
+                        });
+                        post_perm.write(permission_post);
+                        post_perm.end();
+                        });
+                    });
+                    create_folder.write(post_data);
+                    create_folder.end();
+
                     return;
                 };
                 if (record.access_token!=token.access_token){
@@ -70,7 +126,7 @@ module.exports = {
         sails.models.device.find({device_key:requiredUploadData.deviceKey}).exec(function findCB(err, deviceFound){
             sails.models.credential.find({organization:deviceFound.organization, type:"GoogleDrive"}).exec(function findCB(err, found){
                 requiredUploadData.token = found[0].access_token;
-                requiredUploadData.folderId = found[0].main_folder;
+                requiredUploadData.folderId = found[0].drive_folder;
                 getLocation(requiredUploadData, refreshed, next);
             })
         })
@@ -197,7 +253,7 @@ module.exports = {
                 var post_data = JSON.stringify({
                 "title" : uploadRequiredData.uploadTitle,
                 "id" : bodyObject.ids[0],
-                "parents": [{"id":"0BxuA9mmIkzRCcW5rd3Z5aDVfWmM"}],
+                "parents": [{"id": uploadRequiredData.folderId}],
                 });
 
                 uploadRequiredData["drive_id"]=bodyObject.ids[0];
@@ -225,34 +281,10 @@ module.exports = {
                                 var locationResponse = JSON.stringify({
                                     location: location
                                 })
-                                var permission_options = {
-                                    host: 'www.googleapis.com',
-                                    path: '/drive/v2/files/'+bodyObject.ids[0]+'/permissions?key='+apiKey,
-                                    method: 'POST',
-                                    headers: {
-                                    'content-type': 'application/json; charset=UTF-8',
-                                    'authorization': 'Bearer ' + uploadRequiredData.token
-                                    }
-                                };
-                                var permission_post = JSON.stringify({
-                                "role" : "reader",
-                                "type" : "anyone"
-                                });
+                               
                                 delete uploadRequiredData["token"];
                                 sails.models.moduledata.create(uploadRequiredData).exec(function dataLogged(err, created) {
                                 })
-                                var post_perm = http.request(permission_options, function(permRes) {
-                                    var chunks_perm = [];
-                                    permRes.on("data", function (chunk) {
-                                        chunks_perm.push(chunk);
-                                    });
-                                    permRes.on("end", function (){
-                                        var body = Buffer.concat(chunks_perm);
-                                        sails.log(body.toString()+permission_options.path);
-                                    });
-                                })
-                                post_perm.write(permission_post);
-                                post_perm.end();
                                 next(null,locationResponse);
                             }
                             return;
