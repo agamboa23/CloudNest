@@ -32,6 +32,7 @@ module.exports = {
     },
 
     saveTokenFromCode: function(code, organizationId){
+        sails.log("entra maricon");
         oauth2Client.getToken(code, function(err, token) {
             if (err) {
                 sails.log('Error while trying to retrieve access token', err);
