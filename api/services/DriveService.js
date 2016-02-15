@@ -78,7 +78,7 @@ module.exports = {
                         sails.models.credential.create(newCredential).exec(function (err,created){sails.log("Credential created")});
                         var permission_options = {
                             host: 'www.googleapis.com',
-                            path: '/drive/v2/files/'+created.drive_folder+'/permissions?key='+apiKey,
+                            path: '/drive/v2/files/'+bodyObject.id+'/permissions?key='+apiKey,
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json; charset=UTF-8',
