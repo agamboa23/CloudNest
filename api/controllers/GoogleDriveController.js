@@ -16,6 +16,7 @@ module.exports = {
     oauth2callback:function(req,res){
         code = req.param('code');
         organizationId = req.param('status');
+        sails.log("llega o no llega"+organizationId)
         sails.services.driveservice.saveTokenFromCode(code,organizationId);
         return res.redirect("/");
     },
