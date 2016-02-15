@@ -129,19 +129,19 @@ module.exports = {
         },
     getAccessToken: function(requiredUploadData, getLocation, refreshed, next){
 
-        sails.models.device.find({device_key:requiredUploadData.deviceKey}).exec(function findCB(err, deviceFound){
-            sails.models.credential.find({organization:deviceFound.organization, type:"GoogleDrive"}).exec(function findCB(err, found){
-                requiredUploadData.token = found[0].access_token;
-                requiredUploadData.folderId = found[0].drive_folder;
+        sails.models.device.findOne({device_key:requiredUploadData.deviceKey}).exec(function (err, deviceFound){
+            sails.models.credential.findOne({organization:deviceFound.organization, type:"GoogleDrive"}).exec(function (err, found){
+                requiredUploadData.token = found.access_token;
+                requiredUploadData.folderId = found.drive_folder;
                 getLocation(requiredUploadData, refreshed, next);
             })
         })
     },
     refreshAndRepost: function(requiredUploadData,getLocation, refresh, next){
 
-        sails.models.device.find({device_key:requiredUploadData.deviceKey}).exec(function findCB(err, deviceFound){
-            sails.models.credential.find({organization:deviceFound.organization}).exec(function findCB(err, found){
-                sails.services.driveservice.getRefreshToken(found[0].refresh_token, function (newToken){
+        sails.models.device.findOne({device_key:requiredUploadData.deviceKey}).exec(function findCB(err, deviceFound){
+            sails.models.credential.findOne({organization:deviceFound.organization}).exec(function findCB(err, found){
+                sails.services.driveservice.getRefreshToken(found.refresh_token, function (newToken){
                     sails.models.credential.update({organization:deviceFound.organization},{access_token:newToken}).
                     exec(function afterwards(err, updated){
                         requiredUploadData.token = updated[0].access_token;
