@@ -56,7 +56,7 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/driveauth': {
-    controller:'GoogleDriveController',
+    controller:'GoogleDriveController/:organizationId',
     action: 'authorize'
   },
   '/oauth2callback': {
