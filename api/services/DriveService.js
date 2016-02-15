@@ -82,7 +82,7 @@ module.exports = {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json; charset=UTF-8',
-                                'authorization': 'Bearer ' + uploadRequiredData.token
+                                'authorization': 'Bearer ' + token.access_token
                                 }
                         };
                         var permission_post = JSON.stringify({
