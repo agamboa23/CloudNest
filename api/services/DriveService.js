@@ -129,7 +129,8 @@ module.exports = {
         },
     getAccessToken: function(requiredUploadData, getLocation, refreshed, next){
 
-        sails.models.device.findOne({module:requiredUploadData.module}).exec(function (err, deviceFound){
+        sails.models.device.findOne({id:requiredUploadData.device}).exec(function (err, deviceFound){
+            if(!deviceFound){sails.log("no entiendo" + requiredUploadData.device)};
             sails.models.credential.findOne({organization:deviceFound.organization, type:"GoogleDrive"}).exec(function (err, found){
                 requiredUploadData.token = found.access_token;
                 requiredUploadData.folderId = found.drive_folder;
@@ -139,7 +140,7 @@ module.exports = {
     },
     refreshAndRepost: function(requiredUploadData,getLocation, refresh, next){
 
-        sails.models.device.findOne({module:requiredUploadData.module}).exec(function findCB(err, deviceFound){
+        sails.models.device.findOne({id:requiredUploadData.device}).exec(function (err, deviceFound){
             sails.models.credential.findOne({organization:deviceFound.organization}).exec(function findCB(err, found){
                 sails.services.driveservice.getRefreshToken(found.refresh_token, function (newToken){
                     sails.models.credential.update({organization:deviceFound.organization},{access_token:newToken}).
@@ -201,12 +202,12 @@ module.exports = {
             if(!moduleWithKey.enable){
                 res.status(403).send({error: 'selected module is disabled'});
             }
-            sails.log("este"+moduleWithKey.id+"o este"+moduleWithKey.device);
             var postRequiredData ={
             uploadContentType : req.body['uploadContentType'],
             uploadContentLength : req.body['uploadContentLength'],
             uploadTitle : req.body['uploadTitle'],
             module : moduleWithKey.id,
+            device: moduleWithKey.device,
             moduleDataStructure : moduleWithKey.ModuleDataStructure
             };
 
