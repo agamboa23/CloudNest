@@ -201,7 +201,7 @@ module.exports = {
             if(!moduleWithKey.enable){
                 res.status(403).send({error: 'selected module is disabled'});
             }
-
+            sails.log("este"+moduleWithKey.id+"o este"+moduleWithKey.device);
             var postRequiredData ={
             uploadContentType : req.body['uploadContentType'],
             uploadContentLength : req.body['uploadContentLength'],
