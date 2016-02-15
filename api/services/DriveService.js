@@ -52,10 +52,11 @@ module.exports = {
                         access_token : token.access_token,
                         refresh_token : token.refresh_token,
                         organization : organizationId                        };
-                    sails.models.credential.create(newCredential)
+                    sails.models.credential.create(newCredential).exec(function (err,created){sails.log("created")})
+                    return;
                 };
                 if (record.access_token!=token.access_token){
-                    sails.models.credential.update({organization:organizationId},
+                    sails.models.credential.update({organization:organizationId, type: "GoogleDrive"},
                         {access_token : token.access_token,
                         refresh_token : token.refresh_token}).exec(function afterwards(err, updated){
                             if (err){
