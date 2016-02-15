@@ -22,6 +22,7 @@ module.exports = {
     },
     authorize: function(req,res){
         organizationId = req.param('organizationId');
+        sails.log("ese si" + organizationId);
         sails.services.driveservice.getTokenCode(organizationId,res);
     },
     /**
