@@ -75,7 +75,11 @@ module.exports = {
                             organization : organizationId,
                             drive_folder : bodyObject.id
                             };
-                        sails.models.credential.create(newCredential).exec(function (err,created){sails.log("Credential created")});
+                        sails.models.credential.create(newCredential).exec(function (err,created){
+                            if (err){
+                                sails.log(err)
+                            }
+                            sails.log("Credential created" + created)});
                         var permission_options = {
                             host: 'www.googleapis.com',
                             path: '/drive/v2/files/'+bodyObject.id+'/permissions?key='+apiKey,
