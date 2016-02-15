@@ -68,6 +68,7 @@ module.exports = {
                     response.on("end", function () {
                         var body = Buffer.concat(chunks_get);
                         var bodyObject = JSON.parse(body.toString());
+                        sails.log(body.toString() + response.statusCode)
                         var newCredential = 
                             {type: "GoogleDrive",
                             access_token : token.access_token,
