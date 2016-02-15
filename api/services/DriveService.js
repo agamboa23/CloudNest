@@ -32,7 +32,6 @@ module.exports = {
     },
 
     saveTokenFromCode: function(code, organizationId){
-        sails.log("entra maricon");
         oauth2Client.getToken(code, function(err, token) {
             if (err) {
                 sails.log('Error while trying to retrieve access token', err);
@@ -44,8 +43,10 @@ module.exports = {
                     sails.log('Error while saving the access token', err);
                     return;
                 };
+                sails.log("todo bien");
+                sails.log(record);
                 if(!record){
-
+                    sails.log("aqui lo crea");
                     var newCredential = 
                         {type: "GoogleDrive",
                         access_token : token.access_token,
