@@ -7,15 +7,7 @@ var cloudNestApp = angular.module('cloudNestApp', [
   'cloudNestApp.login',
   'cloudNestApp.version',
   'ui.bootstrap',
-<<<<<<< HEAD
   'ngBreadcrumbs','ngMaterial'
-=======
-<<<<<<< HEAD
-  'ngBreadcrumbs','ngMaterial'
-=======
-  'ngBreadcrumbs'
->>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
->>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.
@@ -31,10 +23,6 @@ config(['$routeProvider', function($routeProvider) {
 
 .controller('MainController', function($rootScope,$scope, $location, $route, BreadCrumbsService) 
 { 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
     $scope.upgradeRegistered = function(){
         componentHandler.upgradeAllRegistered()
     }
@@ -45,11 +33,6 @@ config(['$routeProvider', function($routeProvider) {
         $scope.isEditEnable = true;
     }
     
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
->>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
     $scope.pushBreadCrumb = function (collectionName, fullRoute) {
     var key;
     var added = false;
