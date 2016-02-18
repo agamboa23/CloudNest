@@ -24,10 +24,23 @@
     "angular-bootstrap": "~0.11.0",
     "angular-moment": "~0.7.1",
     "jquery": "~2.1.3",
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
     "bootstrap": "~3.3.5",
     "angular-material": "~1.0.5"
   },
   "resolutions": {
     "angular": "^1.3.0"
+<<<<<<< HEAD
+=======
+=======
+    "bootstrap": "~3.3.5"
+  },
+  "resolutions": {
+    "angular": ">=1"
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
   }
 }

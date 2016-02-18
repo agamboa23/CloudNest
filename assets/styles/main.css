@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
 html,
 body {
   margin:0;
@@ -55,12 +59,26 @@ body {
 
 .carddemoBasicUsage .card-media {
   background-color: #F8F8F8; }
+<<<<<<< HEAD
+=======
+=======
+body {
+    background-color: #fff;
+}
+
+
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
 .navbar-brand,
 .navbar-toggle,
 .navbar-nav li a {
     line-height: 105px;
     height: 105px;
     padding-top: 0;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
     font-weight: bold;
     font: bold Georgia, serif;
 }
@@ -91,6 +109,21 @@ body {
     border-bottom: solid;
     border-color: #F50057;
     background-color: #f2efef;
+<<<<<<< HEAD
+=======
+=======
+}
+
+.navbar {
+	background-color: E9E9E9;
+    color: red;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    background-color: red;
+    color: white;
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
 }
 
 .logo-image {

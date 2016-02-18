@@ -1,3 +1,32 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<button class="btn btn-primary pull-right btn-sm RbtnMargin" ng-click="getLocations()" type="button">refresh</button>
+<button class="btn btn-primary pull-right btn-sm"  type="button" data-toggle="modal" ng-click="gmap.reloadMap()" data-target="#createModal">Create new</button>
+<div class="container-fluid">
+	Filter Spots by space identifier:
+	<input type="search" ng-model="searchValue" placeholder="filter spots..." aria-label="filter spots" />
+	<div class="row">
+		<div class="panel-data animate-repeat col-lg-3 col-md-4 col-sm-6 col-xs-12"  ng-repeat="spot in spots | filter:searchValue as results">
+		  <div class="panel-heading">Spot: {{spot.name}}</div>
+		  <div class="panel-body">
+		    <h3 maxlength="50">space: {{spot.space}}</h3>
+		    <p maxlength="50">description: {{spot.description}}</p>
+		  </div>
+		  <div class="panel-footer">
+		  	<button class="btn btn-primary btn-xs" ng-click="go('devices','/devices/'+spot.id)" type="button">Open</button>
+		  	<button class="btn btn-primary btn-xs" ng-click="refreshBreadCrumbs('home')" type="button">Change or Delete</button>
+		  </div>
+		</div>
+
+		<li ng-if="results.length == 0">
+		  <strong>No results found...</strong>
+		</li>
+	</div>
+</div>
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
 <div class="modal fade" id="createModal" role="dialog">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -12,6 +41,10 @@
 					<form class="create-form">
 						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 							<input class="mdl-textfield__input" ng-model="newSpot.name" type="text" id="spotName">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
 							<label class="mdl-textfield__label" for="spotName">Name:</label>
 						</div>
 					  	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -21,6 +54,20 @@
 						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 							<input class="mdl-textfield__input" ng-model="newSpot.description" type="text" id="spotDescription">
 							<label class="mdl-textfield__label" for="spotName">Space:</label>
+<<<<<<< HEAD
+=======
+=======
+							<label class="mdl-textfield__label" for="regionName">Name:</label>
+						</div>
+					  	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" ng-model="newSpot.space" type="text" id="spotSpace">
+							<label class="mdl-textfield__label" for="regionName">Description:</label>
+						</div>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" ng-model="newSpot.description" type="text" id="spotDescription">
+							<label class="mdl-textfield__label" for="regionName">Space:</label>
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
 						</div>
 						<h2> Geographic space: </h2>
 						<div class="text-right">
@@ -58,6 +105,10 @@
 			</div>
 		</div>
 	</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
 </div>
 <div class="container-fluid search-header">
 <div layout="row" layout-wrap>
@@ -173,4 +224,9 @@
 	    </div>
 	  </div>
 	</div>
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
 </div>

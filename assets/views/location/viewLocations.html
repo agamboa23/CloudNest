@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
 <div class="container-fluid search-header">
 <div layout="row" layout-wrap>
 	<md-input-container flex="50" class="md-block">
@@ -32,6 +36,35 @@
 	</div>
 </div>
 
+<<<<<<< HEAD
+=======
+=======
+<button class="btn btn-primary pull-right btn-sm RbtnMargin" ng-click="getLocations()" type="button">refresh</button>
+<button class="btn btn-primary pull-right btn-sm"  type="button" data-toggle="modal" data-target="#createModal">Create new</button>
+<div class="container-fluid">
+	Filter Location by Name:
+	<input type="search" ng-model="searchValue" placeholder="filter locations..." aria-label="filter locations" />
+	<div class="row">
+		<div class="panel-data animate-repeat col-lg-3 col-md-4 col-sm-6 col-xs-12"  ng-repeat="location in locations | filter:searchValue as results" >
+		  <div class="panel-heading">Location: {{location.name}}</div>
+		  <div class="panel-body">
+		    <p maxlength="50">Country: {{location.country}}</p>
+		    <p maxlength="50">state: {{location.state}}</p>
+		    <p maxlength="50">city: {{location.city}}</p>
+		  </div>
+		  <div class="panel-footer">
+		  	<button class="btn btn-primary btn-xs" ng-click="go('spots','/spots/'+location.id)" type="button">Open</button>
+		  	<button class="btn btn-primary btn-xs"  type="button">Change or Delete</button>
+		  </div>
+		</div>
+
+		<li ng-if="results.length == 0">
+		  <strong>No results found...</strong>
+		</li>
+	</div>
+</div>
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
 <div class="modal fade" id="createModal" role="dialog">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -45,6 +78,10 @@
 					<h2> Add a new Location!</h2>
 					<form class="create-form">
 						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
 							<input class="mdl-textfield__input" ng-model="newLocation.name" type="text" id="LocationName">
 							<label class="mdl-textfield__label" for="LocationName">Name:</label>
 						</div>
@@ -56,19 +93,48 @@
 						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 							<input class="mdl-textfield__input" ng-model="newLocation.city" type="text" id="LocationDescription">
 							<label class="mdl-textfield__label" for="LocationDescription">City:</label>
+<<<<<<< HEAD
+=======
+=======
+							<input class="mdl-textfield__input" ng-model="newLocation.name" type="text" id="regionName">
+							<label class="mdl-textfield__label" for="regionName">Name:</label>
+						</div>
+					  	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" ng-model="newLocation.description" type="text" id="regionDescription">
+							<label class="mdl-textfield__label" for="regionDescription">Description:</label>
+						</div>
+						<country-state-select country="newLocation.country" state="newLocation.state"></country-state-select>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" ng-model="newLocation.city" type="text" id="regionDescription">
+							<label class="mdl-textfield__label" for="regionDescription">City:</label>
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
 						</div>
 					</form>
 					<button data-dismiss="modal" ng-click="addLocation()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
 					  Submit
 					</button>
+<<<<<<< HEAD
 					<button data-dismiss="modal" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
 					  Cancel
 					</button>
+=======
+<<<<<<< HEAD
+					<button data-dismiss="modal" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+					  Cancel
+					</button>
+=======
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
 				</div>
 
 			</div>
 		</div>
 	</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
 </div>
 <div class="modal fade" id="viewModal" role="dialog">
 	<div class="modal-dialog modal-lg">
@@ -122,4 +188,9 @@
 	    </div>
 	  </div>
 	</div>
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
+>>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
 </div>
