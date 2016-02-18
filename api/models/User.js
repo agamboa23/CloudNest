@@ -19,6 +19,13 @@ module.exports = {
       collection: 'Passport',
       via: 'user'
     },
+    role: {
+      type: 'string',
+      required: true 
+    },
+    organization: {
+      model: 'Organization'
+    },
 
     getGravatarUrl: function () {
       var md5 = crypto.createHash('md5');

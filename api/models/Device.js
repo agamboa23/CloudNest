@@ -19,6 +19,9 @@ module.exports = {
       type: 'boolean',
       defaultsTo: true
     },
+    name: {
+      type: 'string'
+    },
     status: {
       type: 'string',
       defaultsTo: "Just Registered"
@@ -35,8 +38,8 @@ module.exports = {
     configuration: {
       model: 'Configuration'
     },
-    sensors: {
-      collection: 'Sensor',
+    modules: {
+      collection: 'Module',
       via: 'device'
     },
     organization: {

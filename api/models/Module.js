@@ -1,5 +1,5 @@
 /**
-* Sensor.js
+* Module.js
 *
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
@@ -9,7 +9,7 @@ var uuid = require('uuid-v4');
 module.exports = {
 
   attributes: {
-    sensorCode: {
+    module_key: {
       type: 'string',
       unique: true
     },
@@ -33,19 +33,30 @@ module.exports = {
     lastSignal: {
       type: 'datetime'
     },
+    lastData:{
+
+    },
+    DataType: {
+      type: 'string',
+      enum: ['image','video','string','integer','float','array','matrix','json','binary']
+    },
     configuration: {
       model: 'Configuration'
     },
     device: {
       model:'Device'
     },
-    dataStructure: {
-      model: 'SensorData'
+    ModuleData: {
+    	collection: 'ModuleData',
+      	via: 'module'
+    },
+    ModuleDataStructure: {
+      model: 'ModuleDataStructure'
     }
   },
-  beforeCreate: function (sensor, next) {
-    if (_.isEmpty(sensor.sensorCode)) {
-      sensor.sensorCode = uuid();
+  beforeCreate: function (module, next) {
+    if (_.isEmpty(module.module_key)) {
+      module.module_key = uuid();
     };
     next();
   }

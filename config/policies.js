@@ -33,6 +33,9 @@ module.exports.policies = {
   },
    UserController: {
     'create': true
+  },
+  InterfaceController: {
+    '*':true
   }
   /***************************************************************************
   *                                                                          *
