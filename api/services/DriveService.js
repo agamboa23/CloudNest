@@ -130,10 +130,6 @@ module.exports = {
     getAccessToken: function(requiredUploadData, getLocation, refreshed, next){
 
         sails.models.device.findOne({id:requiredUploadData.device}).exec(function (err, deviceFound){
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
             if(!deviceFound){
                 sails.log("Device Not Found" + requiredUploadData.device);
                 next(err);
@@ -146,13 +142,6 @@ module.exports = {
                     next("not found");
                     return;
                 }
-<<<<<<< HEAD
-=======
-=======
-            if(!deviceFound){sails.log("no entiendo" + requiredUploadData.device)};
-            sails.models.credential.findOne({organization:deviceFound.organization, type:"GoogleDrive"}).exec(function (err, found){
->>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
->>>>>>> efca8af042c5574c02c50f1d121e2529a23afbe3
                 requiredUploadData.token = found.access_token;
                 requiredUploadData.folderId = found.drive_folder;
                 getLocation(requiredUploadData, refreshed, next);
