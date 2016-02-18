@@ -8,12 +8,11 @@
 module.exports = {
 
   attributes: {
-    configurationName: {
-      type: 'string'
-    },
-    congigurationType: {
-      type: 'string',
-      enum: ["device","sensor"]
-    }
+  	device: {
+  		model: 'Device'
+  	},
+  	module: {
+  		model: 'Module'
+  	}
   }
 };

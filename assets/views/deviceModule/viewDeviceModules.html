@@ -1,0 +1,94 @@
+<div class="container-fluid search-header">
+<div layout="row" layout-wrap>
+	<md-input-container flex="50" class="md-block">
+	  <label>Filter Modules:</label>
+	  <input ng-model="searchValue">
+	</md-input-container>
+	<md-button class="md-fab md-primary" ng-click="getModules()">
+		<md-icon class="material-icons">refresh</md-icon>
+	</md-button>
+	<md-button class="md-fab" data-toggle="modal" data-target="#viewModal" ng-click="select(newModule)">
+		<md-icon class="material-icons">add</md-icon>
+	</md-button>
+</div>				
+</div>
+<div class="container-fluid">
+	<div layout="row" layout-wrap>
+	  <md-card flex-gt-sm="" ng-click="select(Module);showModal('#viewModal')" class="card col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="Module in deviceModules | filter:searchValue as results" >
+	    <md-card-title>
+	      <md-card-title-text>
+	        <span class="md-headline card-text">Module: {{Module.name}}	
+	        	<md-button class="md-icon-button" aria-label="Configure" ng-click="go('configuration','/configuration/'+Module.id+'/module/'+Module.configuration.id);stopPropagation($event)" ng-click="select(newModule)">
+				<md-icon class="material-icons">settings</md-icon>
+				      <md-tooltip>
+				        Configure
+				      </md-tooltip>
+				</md-button>
+			</span>
+	      </md-card-title-text>
+	    </md-card-title>
+	    <md-card-content>
+	    	<span class="md-subhead card-text">{{Module.model}}</span>
+	        <h5 class="card-text">Data Type: {{Module.DataType}} <br> Last Reading: {{Module.lastData}}</h5>
+	    </md-card-content>
+	    <md-card-actions layout="row" class="card-bottom  mdl-card--border"  layout-align="end center">
+	      <md-button ng-click="go('data','/moduleData/'+Module.id+'/'+Module.DataType);stopPropagation($event)">Data</md-button>
+	      <md-button ng-click="go('dataStructure','/dataStructure/'+Module.id+'/'+Module.ModuleDataStructure.id);stopPropagation($event)">Structure</md-button>
+	      <md-button  ng-click="select(Module);stopPropagation($event);showModal('#confirmDelete')">Delete</md-button>
+	    </md-card-actions>
+	  </md-card>
+	</div>
+</div>
+<div class="modal fade" id="viewModal" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Module Register</h4>
+        </div>
+			<div class="modal-body">
+				<div class="container-fluid create-container">
+
+					<h2> Module details </h2>
+					<form class="create-form">
+					<div layout="row" layout-wrap>
+					<div ng-repeat='(key, prop) in selected track by key' flex="50" flex-gt-sm="">
+						<md-input-container ng-show="isEditEnable" class="md-block" >
+					        <label>{{key}}</label>
+					        <input ng-model="selected[key]" type="text"  id="generalInput">
+					    </md-input-container>
+						<p ng-show="!isEditEnable" >{{key}} : {{prop}}</p>
+					</div>
+					</div>
+					</form>
+					<button ng-show="!isEditEnable" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" ng-click="setEditable(newModule)" type="button">Edit</button>
+					<button ng-show="isEditEnable" data-dismiss="modal" ng-click="submitForm()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+					  Submit
+					</button>
+					<button data-dismiss="modal" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+					  Cancel
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmDelete" role="dialog">
+	<div class="modal-dialog modal-sm">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      <h4 class="modal-title">Delete Confirmation</h4>
+	    </div>
+	    <div class="modal-body">
+	      <p>This will delete the Module and all its related data. Are you sure?</p>
+	    </div>
+	    <div class="modal-footer">
+	      <md-button class="md-primary md-accent md-raised" ng-click ="deleteModule()"  data-dismiss="modal">Delete</md-button>
+	      <md-button class="md-primary md-accent md-raised"data-dismiss="modal">Cancel</md-button>
+	    </div>
+	  </div>
+	</div>
+</div>

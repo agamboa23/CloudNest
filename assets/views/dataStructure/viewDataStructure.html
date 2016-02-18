@@ -1,0 +1,31 @@
+<button class="btn btn-primary pull-right btn-sm RbtnMargin" ng-click="getLocations()" type="button">refresh</button>
+<button class="btn btn-primary pull-right btn-sm"  type="button">Edit</button>
+<div class="container-fluid">
+	<div class="row">
+		<div class="panel panel-default" >
+		  <div class="panel-heading">Current Data Structure</div>
+		  <div class="panel-body">
+		    <div ng-repeat='(key, prop) in dataStructure track by key'>
+			    <p>{{key}} : {{prop}}</p>
+			    <input ng-show="isEditFormOpen" id="editForm" ng-iftype='text' ng-model='dataStructure[key]'>
+				<button ng-show="isEditFormOpen" class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" ng-click="removeAttribute(key)">
+				  <i class="material-icons">close</i>
+				</button>
+			</div>
+			<div ng-show="isEditFormOpen">
+				new Attributes:
+				<input type='text' ng-model='newAttribute.key'>
+				<input type='text' ng-model='newAttribute.value'>
+				<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" ng-click="addAttribute()">
+				  <i class="material-icons">add</i>
+				</button>
+			</div>
+		  </div>
+		  <div class="panel-footer">
+		  <button ng-show="isEditFormOpen" data-dismiss="modal" ng-click="setDataStructure()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"> Update
+			</button>
+		  	<button class="btn btn-primary btn-xs" ng-click="isEditFormOpen = !isEditFormOpen" type="button">Change or Delete</button>
+		  </div>
+		</div>
+	</div>
+</div>

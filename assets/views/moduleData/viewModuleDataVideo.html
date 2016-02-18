@@ -1,0 +1,94 @@
+<style>
+.demo-card-image.mdl-card {
+  width: 256px;
+  height: 256px;
+}
+.demo-card-image > .mdl-card__actions {
+  height: 52px;
+  padding: 16px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+.demo-card-image__filename {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+}
+</style>
+<div class="container-fluid search-header">
+	<div layout="row" layout-wrap>
+		<md-input-container flex="100" class="md-block">
+		<label>Registers per Page:</label>
+	    <input class="data-container" type="number" min="1" max="100" ng-model="dataPerPage">
+		</md-input-container>
+	</div>				
+</div>
+<div class="container-fluid">
+	<div class="container">
+		<dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+		<div class="row">
+			<div dir-paginate="data in readings | itemsPerPage: dataPerPage" total-items="totalReadings" current-page="pagination.current">
+				<div class="demo-card-image mdl-card mdl-shadow--2dp col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-click="select(data)" data-toggle="modal" data-target="#viewModal" style="background: url('https://drive.google.com/thumbnail?authuser=0&sz=w256-h256&id={{data.drive_id}}') center/cover">
+					<div class="mdl-card__title mdl-card--expand"></div>
+					<div class="mdl-card__actions">
+						<span class="demo-card-image__filename">{{data.uploadTitle}}</span>
+					</div>
+					<button class="mdl-card__actions mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" ng-click="stopPropagation($event);select(data);showModal('#enlargeModal')" >
+					  View Image
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="viewModal" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Device Register</h4>
+        </div>
+			<div class="modal-body">
+				<div class="container-fluid create-container">
+					<h2> Device details </h2>
+					<form class="create-form">
+					<div layout="row" layout-wrap>
+					<div ng-repeat='(key, prop) in selected track by key' flex="50" flex-gt-sm="">
+						<md-input-container ng-show="isEditEnable" class="md-block" >
+					        <label>{{key}}</label>
+					        <input ng-model="selected[key]" type="text"  id="generalInput">
+					    </md-input-container>
+						<p ng-show="!isEditEnable" >{{key}} : {{prop}}</p>
+					</div>
+					</div>
+					</form>
+					<button data-dismiss="modal" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+					  Close
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal face" id="enlargeModal" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Video enlarged</h4>
+        </div>
+			<div class="modal-body">
+				<div class="container-fluid create-container">
+				    <video controls="controls">
+				        <source src="https://drive.google.com/uc?export=download&id=0BxuA9mmIkzRCQ1FYMkwxVWdNNEU" type='video/mp4'/>
+				    </video><br>
+					<button data-dismiss="modal" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+						  Close
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+

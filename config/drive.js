@@ -7,5 +7,6 @@ module.exports.drive = {
    authProviderX509CertUrl:"https://www.googleapis.com/oauth2/v1/certs",
    tokenUri:"https://accounts.google.com/o/oauth2/token",
    authUri:"https://accounts.google.com/o/oauth2/auth",
-   projectId:"cloudnest-1166"
+   projectId:"cloudnest-1166",
+   appKey:"AIzaSyCHUND5s31jKjZHK5EYaHHTlo8sbDYqtdw"
 }
