@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="container-fluid search-header">
 	<div layout="row" layout-wrap>
 		<md-input-container flex="100" class="md-block">
@@ -10,6 +11,15 @@
   <div class="container">
 	<div >
 	    <table class="mdl-data-table mdl-js-data-table data-container  mdl-shadow--2dp">
+=======
+<button class="btn btn-primary pull-right btn-sm RbtnMargin" ng-click="getLocations()" type="button">refresh</button>
+<button class="btn btn-primary pull-right btn-sm"  type="button">Edit</button>
+<div class="container-fluid">
+  <div class="container">
+	<div>
+	    <input type="number" min="1" max="100" class="form-control" ng-model="dataPerPage">
+	    <table class="mdl-data-table mdl-js-data-table">
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
 			<thead>
 				<tr>
 					<th class="mdl-data-table__cell--non-numeric">Reading date</th>
@@ -18,13 +28,18 @@
 				</tr>
 			</thead>
 			<tbody>
+<<<<<<< HEAD
 			    <tr dir-paginate="data in readings | itemsPerPage: dataPerPage" data-toggle="modal" data-target="#viewModal" total-items="totalReadings" current-page="pagination.current" ng-click="select(data)">
+=======
+			    <tr dir-paginate="data in readings | itemsPerPage: dataPerPage" total-items="totalReadings" current-page="pagination.current">
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
 	      			<td class="mdl-data-table__cell--non-numeric">{{ data.readingTime}}</td>
 				    <td class="mdl-data-table__cell--non-numeric">{{ data.createdAt }}</td>
 				    <td class="mdl-data-table__cell--non-numeric">{{ data.data }}</td>
 				</tr>
 			</tbody>
 	    </table>
+<<<<<<< HEAD
 	    <div layout="row" layout-wrap class="data-container">
 			<dir-pagination-controls class="" flex="100" on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
 		</div>	
@@ -60,3 +75,10 @@
 		</div>
 	</div>
 </div>
+=======
+
+	    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+	</div>
+  </div>
+</div>
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29

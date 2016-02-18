@@ -1,6 +1,10 @@
 'use strict';
 
+<<<<<<< HEAD
 angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState','angularUtils.directives.dirPagination','ngMaterial'])
+=======
+angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState','angularUtils.directives.dirPagination'])
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.
@@ -39,6 +43,7 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
                 controller: 'DataStructureCtrl',
                 state: 'dataStructure'
             }).
+<<<<<<< HEAD
             when('/moduleData/:moduleID/video',{
                 templateUrl: 'views/moduleData/viewModuleDataVideo.html',
                 controller: 'ModuleDataCtrl',
@@ -50,12 +55,26 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
                 state: 'data'
             }).
             when('/moduleData/:moduleID/:dataType?',{
+=======
+   			when('/moduleData/:moduleID',{
+  				templateUrl: 'views/moduleData/viewModuleData.html',
+  				controller: 'ModuleDataCtrl',
+  				state: 'data'
+  			}).
+            when('/moduleDataImage/:moduleID',{
+                templateUrl: 'views/moduleData/viewModuleData.html',
+                controller: 'ModuleDataCtrl',
+                state: 'data'
+            }).
+             when('/moduleDataVideo/:moduleID',{
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
                 templateUrl: 'views/moduleData/viewModuleData.html',
                 controller: 'ModuleDataCtrl',
                 state: 'data'
             });
 }])
 .controller('RegionCtrl', function($scope,$http,$location) {
+<<<<<<< HEAD
 	$scope.newRegion = {
         name: "",
         description: ""
@@ -101,10 +120,16 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
 
 	$scope.getRegions = function() {
 		$http.get('/region?sort=id%20DESC&organization='+$scope.user.organization).then(function (res){
+=======
+	$scope.newRegion = "";
+	$scope.getRegions = function() {
+		$http.get('/region?organization='+$scope.user.organization).then(function (res){
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
 			$scope.regions = res.data;
 		});
 		return false;
 	}
+<<<<<<< HEAD
     $scope.updateRegion = function() {
         var data = JSON.stringify($scope.selected);
         $http.put('/region/'+$scope.selectedId,data).then(function (res){
@@ -117,20 +142,29 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
         });
         return false;
     }
+=======
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
 	$scope.addRegion = function() {
 		var data = JSON.stringify({
 	            name: $scope.newRegion.name,
 	            description: $scope.newRegion.description,
 	            organization: $scope.user.organization
 	        });
+<<<<<<< HEAD
 		$http.post('/region',data).then(function(res){
             $scope.getRegions();
         });
 		$scope.getRegions();
+=======
+		$http.post('/region',data);
+		$scope.getRegions();
+		return false;
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
 	}
 	$scope.getRegions();
 })
 .controller('LocationCtrl', function($scope,$http, $routeParams) {
+<<<<<<< HEAD
     $scope.newLocation = {
         name: "",
         description: "",
@@ -191,10 +225,18 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
     }
 	$scope.getLocations = function() {
 		$http.get('/location?sort=id%20DESC&region='+$routeParams.regionID).then(function (res){
+=======
+	$scope.getLocations = function() {
+		$http.get('/location?region='+$routeParams.regionID).then(function (res){
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
 			$scope.locations = res.data;
 		});
 		return false;
 }
+<<<<<<< HEAD
+=======
+	$scope.newLocation = "";
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
 	$scope.addLocation = function() {
 		var data = JSON.stringify({
 	            name: $scope.newLocation.name,
@@ -211,6 +253,7 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
 	$scope.getLocations();
 })
 .controller('SpotCtrl', function($scope,$http, $routeParams) {
+<<<<<<< HEAD
     $scope.newSpot = {
         name: "",
         description: "",
@@ -287,16 +330,24 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
     $scope.pinpoint={
         lat:55.165691,
         lon:-3.451526};
+=======
+    $scope.gmap={};
+    $scope.loc = { lat: 55.165691, lon: -3.451526 };
+    $scope.pinpoint={};
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
     $('#createModal').on('show.bs.modal', function (e) {
     	 setTimeout(function(){
     	 $scope.gmap.reloadMap();
     		}, 300);
 	});
+<<<<<<< HEAD
     $('#viewModal').on('show.bs.modal', function (e) {
          setTimeout(function(){
          $scope.gmap.reloadMap();
             }, 500);
     });
+=======
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
     $scope.gotoCurrentLocation = function () {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(function (position) {
@@ -334,36 +385,57 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
         }
     };
 	$scope.getSpots = function() {
+<<<<<<< HEAD
 	$http.get('/spot?sort=id%20DESC&location='+$routeParams.locationID).then(function (res){
+=======
+	$http.get('/spot?location='+$routeParams.locationID).then(function (res){
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
 		$scope.spots = res.data;
 	});
 	return false;
 }
+<<<<<<< HEAD
     $scope.addSpot = function() {
 
+=======
+    $scope.newSpot = {};
+    $scope.addSpot = function() {
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
         var data = JSON.stringify({
                 name: $scope.newSpot.name,
                 description: $scope.newSpot.description,
                 space: $scope.newSpot.space,
+<<<<<<< HEAD
                 longitude: $scope.pinpoint.lon,
+=======
+                longitude: $scope.pinpoint.lng,
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
                 latitude: $scope.pinpoint.lat,
                 location: $routeParams.locationID
             });
         $http.post('/spot',data).success(function (data,status,headers,config){
         if (data.result){
             console.log(data.result)
+<<<<<<< HEAD
             $scope.getSpots();
+=======
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
         } else if (data.error) {
             console.log(status)
         }}).error(function(data, status, headers, config) {
          // this isn't happening:
          console.log("error, response status:", status);
     });
+<<<<<<< HEAD
+=======
+        $scope.getSpots();
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
         return false;
     }
 	$scope.getSpots();
 })
 .controller('DeviceCtrl', function($scope,$http, $routeParams) {
+<<<<<<< HEAD
 
     $scope.newDevice = {
         name:"",
@@ -434,20 +506,37 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
     $scope.addDevice = function() {
         var data = JSON.stringify({
                 name: $scope.newDevice.name,
+=======
+	$scope.getDevices = function() {
+	$http.get('/device?spot='+$routeParams.spotID).then(function (res){
+		$scope.devices = res.data;
+	});
+	return false;
+}
+    $scope.newDevice = {};
+    $scope.addDevice = function() {
+        var data = JSON.stringify({
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
                 deviceModel: $scope.newDevice.deviceModel,
                 description: $scope.newDevice.description,
                 spot: $routeParams.spotID,
                 organization: $scope.user.organization
             });
         console.log(data);
+<<<<<<< HEAD
         $http.post('/device',data).then(function(res){
             $scope.getDevices();
         });
+=======
+        $http.post('/device',data);
+        $scope.getDevices();
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
         return false;
     }
 	$scope.getDevices();
 })
 .controller('DeviceModuleCtrl', function($scope,$http, $routeParams) {
+<<<<<<< HEAD
     $scope.newModule = {
         name:"",
         model: "",
@@ -515,6 +604,15 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
     }
 	return false;
     }
+=======
+	$scope.getModules = function() {
+	$http.get('/module?device='+$routeParams.deviceID).then(function (res){
+		$scope.deviceModules = res.data;
+	});
+	return false;
+}
+    $scope.newModule = {};
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
     $scope.addModule = function() {
         var data = JSON.stringify({
                 name: $scope.newModule.name,
@@ -523,12 +621,19 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
                 device: $routeParams.deviceID
             });
         console.log(data);
+<<<<<<< HEAD
         $http.post('/module',data).then(function(res){
             $scope.getModules();
         });
         return false;
     }
 
+=======
+        $http.post('/module',data);
+        $scope.getModules();
+        return false;
+    }
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
 	$scope.getModules();
 })
 .controller('ConfigurationCtrl', function($scope,$http, $routeParams, $location) {
@@ -592,11 +697,18 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
         $scope.dataStructure["module"]=$routeParams.moduleID;
         var postData = JSON.stringify($scope.dataStructure);
         $http.post('/ModuleDataStructure',postData).success(function (data,status,headers,config){
+<<<<<<< HEAD
+=======
+            console.log(data);
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
             if (data){
                 console.log(data.id);
                 var newID = JSON.stringify({
                         ModuleDataStructure: data.id,
+<<<<<<< HEAD
                         DataType: data.DataType
+=======
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
                     });
                 $http.put('/module/'+$routeParams.moduleID,newID);
                 $location.path("dataStructure/"+$routeParams.moduleID+'/'+data.id);
@@ -608,6 +720,7 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
     }
     $scope.getDataStructure();
 })
+<<<<<<< HEAD
 .controller('ModuleDataCtrl', function($scope,$http, $routeParams) {
     $scope.selected = "";
     $scope.selectedId="";
@@ -622,6 +735,26 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
         $http.get('/moduleData?sort=id%20DESC&module='+$routeParams.moduleID+"&skip="+($scope.pagination.current-1)*$scope.dataPerPage+"&limit="+$scope.dataPerPage).then(function (res){
             $scope.totalReadings = resCount.data.count;
             $scope.readings = res.data;
+=======
+.controller('ModuleDataStructureCtrl', function($scope,$http, $routeParams) {
+	$scope.getDataStructure = function() {
+	$http.get('/spot?location='+$routeParams.locationID).then(function (res){
+		$scope.spots = res.data;
+	});
+	return false;
+}
+	$scope.getSpots();
+})
+.controller('ModuleDataCtrl', function($scope,$http, $routeParams) {
+	$scope.getModuleData = function() {
+
+    $http.get('/moduleData/count?moduleID='+$routeParams.moduleID).then(function (res){
+        $scope.totalReadings = res.data.count;
+        console.log(res);
+        $http.get('/moduleData?module='+$routeParams.moduleID+"&skip="+($scope.pagination.current-1)*$scope.dataPerPage+"&limit="+$scope.dataPerPage).then(function (res){
+            $scope.readings = res.data;
+            console.log(res.data);
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
         });
     })
 	return false;
@@ -633,16 +766,37 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
         current: 1
     };
     $scope.getModuleData();
+<<<<<<< HEAD
     $scope.showModal = function(modal){
         $(modal).modal('show');
     }
     $scope.pageChanged = function(num) {
         $scope.getModuleData();
         console.log($scope.readings.length);
+=======
+
+    $scope.pageChanged = function(num) {
+        $scope.getModuleData();
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
     };
 
 
 }).
+<<<<<<< HEAD
+=======
+filter('display', function () {
+    return function (input, decimals) {
+        if (!decimals) decimals = 0;
+        input = input * 1;
+        var ns = input > 0 ? "N" : "S";
+        input = Math.abs(input);
+        var deg = Math.floor(input);
+        var min = Math.floor((input - deg) * 60);
+        var sec = ((input - deg - min / 60) * 3600).toFixed(decimals);
+        return deg + "°" + min + "'" + sec + '"' + ns;
+    }
+}).
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
 filter('lat', function () {
     return function (input, decimals) {
         if (!decimals) decimals = 0;
@@ -715,11 +869,14 @@ directive("appMap", function () {
             scope.internalControl.reloadMap= function(){
             	google.maps.event.trigger(map, 'resize');
             };
+<<<<<<< HEAD
             scope.internalControl.update=function(location){
                 placeMarker(getLocation(location));
                 centerMap(getLocation(location));
 
             }
+=======
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
             // update the control
             function updateControl() {
 
@@ -743,7 +900,10 @@ directive("appMap", function () {
 
                 // create the map
                 map = new google.maps.Map(element[0], options);
+<<<<<<< HEAD
                 placeMarker(getLocation(scope.center))
+=======
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
 
                 // listen to changes in the center property and update the scope
                 google.maps.event.addListener(map, 'center_changed', function () {
@@ -751,7 +911,11 @@ directive("appMap", function () {
                     // do not update while the user pans or zooms
                     if (toCenter) clearTimeout(toCenter);
                     toCenter = setTimeout(function () {
+<<<<<<< HEAD
                         if (scope.center.latlng) {
+=======
+                        if (scope.center) {
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
 
                             // check if the center has really changed
                             if (map.center.lat() != scope.center.lat ||
@@ -765,10 +929,17 @@ directive("appMap", function () {
                     }, 100);
                 });
                 google.maps.event.addListener(map, 'click', function(event) {
+<<<<<<< HEAD
                 	placeMarker(event.latLng);
                 });
 
             }
+=======
+                                    console.log(scope.center);
+
+                	placeMarker(event.latLng);
+                });
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
             function placeMarker(location) {
                 if (!marker){
                     marker = new google.maps.Marker({
@@ -779,12 +950,22 @@ directive("appMap", function () {
                 else{
                     marker.setPosition(location);
                 }
+<<<<<<< HEAD
                 scope.pinpoint.lon = location.lng();
                 scope.pinpoint.lat = location.lat();
             }
             function centerMap(location){
                 map.setCenter(location)
             }
+=======
+                scope.pinpoint.lng = location.lng();
+                scope.pinpoint.lat = location.lat();
+                
+            }
+            }
+
+
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
             // convert current location to Google maps location
             function getLocation(loc) {
                 if (loc == null) return new google.maps.LatLng(40, -73);
@@ -793,4 +974,8 @@ directive("appMap", function () {
             }
         }
     };
+<<<<<<< HEAD
 })
+=======
+});
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29

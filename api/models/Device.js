@@ -38,7 +38,11 @@ module.exports = {
     configuration: {
       model: 'Configuration'
     },
+<<<<<<< HEAD
     modules: {
+=======
+    module: {
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
       collection: 'Module',
       via: 'device'
     },

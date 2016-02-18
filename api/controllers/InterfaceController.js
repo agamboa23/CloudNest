@@ -31,9 +31,13 @@ module.exports = {
     		req.body["module"]=moduleWithKey.id;
     		req.body["ModuleDataStructure"]=moduleWithKey.ModuleDataStructure;
     		sails.models.moduledata.create(req.body).exec(function dataLogged(err, created) {
+<<<<<<< HEAD
                 sails.models.module.update({module_key:key},{lastData:req.body.data}).exec(function (err, updated){
                     sails.log(created);
                 });
+=======
+    			sails.log(created);
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
     		})
     		return res.json(moduleWithKey);
     	})

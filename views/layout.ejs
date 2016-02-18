@@ -15,7 +15,10 @@
   <link rel="stylesheet" href="/styles/vendor/bootstrap.css">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
   <link rel="stylesheet" href="/styles/main.css">
+<<<<<<< HEAD
   <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
+=======
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
   <link rel="stylesheet" href="styles/vendor/material.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
@@ -23,6 +26,7 @@
 </head>
 <body ng-controller="MainController">
 <%-body%>
+<<<<<<< HEAD
 <div id="wrapper">
 	<div id="header">
 		<header>
@@ -120,11 +124,107 @@
   <script src="components/angularUtils-pagination/dirPagination.js"></script>
   <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+=======
+  <header>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	  <div ng-switch="user.role">
+	    <div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>                        
+			</button>
+			<a class="navbar-brand" href="#">
+				<img alt="Brand" class="logo-image" src="img/logo.png">
+			</a>
+	    </div>
+
+	    <div class="collapse navbar-collapse" ng-switch-when="admin" id="myNavbar">
+	      <ul class="nav navbar-nav">
+	        <li class="active"><a href="#">Home</a></li>
+	        <li class="dropdown">
+	          <a class="dropdown-toggle" href="#">Page 1 <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#">Page 1-1</a></li>
+	            <li><a href="#">Page 1-2</a></li>
+	            <li><a href="#">Page 1-3</a></li>
+	          </ul>
+	        </li>
+	        <li><a href="#">Page 2</a></li>
+	        <li><a href="#">Page 3</a></li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Account</a></li>
+	        <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+	      </ul>
+	    </div>
+
+	   	<div class="collapse navbar-collapse" ng-switch-when="user" id="myNavbar">
+	      <ul class="nav navbar-nav">
+	        <li ng-class="{ active: isActive('/')}"><a href="#/region">Home</a></li>
+	       	<li ng-class="{ active: isActive('/about')}"><a href="#/about">Organization</a></li>
+	        <li class="dropdown">
+	          <a class="dropdown-toggle" href="#">Create new<span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#/newRegion">Region</a></li>
+	            <li><a href="#/newLocation">Location</a></li>
+	            <li><a href="#/newSpot">Spot</a></li>
+	            <li><a href="#/newDevice">Device</a></li>
+	            <li><a href="#/newSensor">Sensor</a></li>
+	          </ul>
+	        </li>
+	       	<li ng-class="{ active: isActive('/about')}"><a href="#/about">About</a></li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Account</a></li>
+	        <li><a href="/logout" ng-click="signOut()" ><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+	      </ul>
+	    </div>
+
+	    <div class="collapse navbar-collapse" ng-switch-default id="myNavbar">
+	      <ul class="nav navbar-nav">
+	        <li ng-class="{ active: isActive('/')}"><a href="#/home">Home</a></li>
+	       	<li ng-class="{ active: isActive('/about')}"><a href="#/about">About</a></li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+	        <li ng-class="{ active: isActive('/login')}"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+	      </ul>
+	    </div>
+
+
+	  </div>
+	</nav>
+  </header>
+
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+  <ul id="home" bread-crumbs ng-if="state!='off'"></ul>
+
+  <div ng-view></div>
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="components/angularUtils-pagination/dirPagination.js"></script>
+  <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
   <script src="app.js"></script>
   <script src="js/general/logicalManagment.js"></script>
   <script src="js/general/auth.js"></script>
   <script src="js/vendor/angular-country-state.min.js"></script>
   <script src="js/vendor/TweenLite.min.js"></script>
+<<<<<<< HEAD
+=======
+  <script src="js/vendor/material.min.js"></script>
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>

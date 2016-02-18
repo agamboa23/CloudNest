@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="container-fluid search-header">
 <div layout="row" layout-wrap>
 	<md-input-container flex="50" class="md-block">
@@ -32,6 +33,31 @@
 </div>
 
 <div class="modal fade" id="viewModal" role="dialog">
+=======
+<button class="btn btn-primary pull-right btn-sm RbtnMargin" ng-click="getRegions()" type="button">refresh</button>
+<button class="btn btn-primary pull-right btn-sm" type="button"  data-toggle="modal" data-target="#createModal">Create new</button>
+<div class="container-fluid">
+	Filter Region by Name:
+	<input type="search" ng-model="searchValue" placeholder="filter friends..." aria-label="filter friends" />
+	<div class="row">
+		<div class="panel-data col-lg-3 col-md-4 col-sm-6 col-xs-12"  ng-repeat="region in regions | filter:searchValue as results" >
+		  <div class="panel-heading">Region: {{region.name}}</div>
+		  <div class="panel-body">
+		    <p maxlength="50">Description: {{region.description}}</p>
+		  </div>
+		  <div class="panel-footer">
+		  	<button class="btn btn-primary btn-xs" ng-click="go('locations','/locations/'+region.id)" type="button">Open</button>
+		  	<button class="btn btn-primary btn-xs"  type="button">Change or Delete</button>
+		  </div>
+		</div>
+
+		<li ng-if="results.length == 0">
+		  <strong>No results found...</strong>
+		</li>
+	</div>
+</div>
+<div class="modal fade" id="createModal" role="dialog">
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
         <div class="modal-header">
@@ -41,6 +67,7 @@
 			<div class="modal-body">
 				<div class="container-fluid create-container">
 
+<<<<<<< HEAD
 					<h2> Region details </h2>
 					<form class="create-form">
 					<div layout="row" layout-wrap>
@@ -85,3 +112,25 @@
 	</div>
 </div>
 
+=======
+					<h2> Add a new Region!</h2>
+					<form class="create-form">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" ng-model="newRegion.name" type="text" id="regionName">
+							<label class="mdl-textfield__label" for="regionName">Name:</label>
+						</div>
+					  	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" ng-model="newRegion.description" type="text" id="regionDescription">
+							<label class="mdl-textfield__label" for="regionName">Description:</label>
+						</div>
+					</form>
+					<button data-dismiss="modal" ng-click="addRegion()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+					  Submit
+					</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+>>>>>>> 9c97dde2cd209287eb9d1bc1495512c4a5efcc29
