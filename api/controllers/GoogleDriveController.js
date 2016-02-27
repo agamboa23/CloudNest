@@ -17,7 +17,7 @@ module.exports = {
         code = req.param('code');
         organizationId = req.param('state');
         sails.services.driveservice.saveTokenFromCode(code,organizationId);
-        return res.redirect("/");
+        return res.redirect("/organization");
     },
     authorize: function(req,res){
         organizationId = req.param('organizationId');
