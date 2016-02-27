@@ -27,7 +27,12 @@ $scope.login = function() {
 	$http.post('/auth/local',data).success(function (data,status,headers,config){
 		if (data.result){
 			$scope.signIn(data.result);
-			$location.path('/region');
+			if (data.result.role==="admin"){
+				$location.path('/organization')
+			}
+			else{
+				$location.path('/region');
+			}
 		} else if (data.error) {
 			$('#attemptModal').modal('show');
 			$scope.userAuth.identifier ="";

@@ -1,9 +1,24 @@
 'use strict';
 
 angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState','angularUtils.directives.dirPagination','ngMaterial'])
-
+.config(function($sceDelegateProvider) {
+  $sceDelegateProvider.resourceUrlWhitelist([
+    // Allow same origin resource loads.
+    'self',
+    // Allow loading from outer templates domain.
+    'http://googledrive.com/host/**'
+  ]); 
+})
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.
+                when('/organization', {
+                templateUrl: 'views/organization/viewOrganizations.html',
+                controller: 'OrganizationCtrl'
+                }).
+            when('/userManagment/:organizationID', {
+                templateUrl: 'views/user/viewUsers.html',
+                controller: 'UserManagmentCtrl'
+              }).
   			when('/region', {
 			    templateUrl: 'views/region/viewRegions.html',
 			    controller: 'RegionCtrl',
@@ -41,7 +56,7 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
             }).
             when('/moduleData/:moduleID/video',{
                 templateUrl: 'views/moduleData/viewModuleDataVideo.html',
-                controller: 'ModuleDataCtrl',
+                controller: 'DataVideoCtrl',
                 state: 'data'
             }).
              when('/moduleData/:moduleID/image',{
@@ -55,6 +70,176 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
                 state: 'data'
             });
 }])
+.controller('UserManagmentCtrl', function($scope,$http,$location,$routeParams) {
+    $scope.newSystemUser = {
+        username: "",
+        name: "",
+        lastname: "",
+        email: ""
+        };
+    $scope.selected = "";
+    $scope.selectedId="";
+    $scope.isEditEnable = false;
+    $scope.select= function(selected){
+        if (!selected.id){
+            $scope.selectedId="";
+            selected.password="";
+            selected.password2="";
+            for (var property in selected){
+            selected[property]= "";
+            }
+            $scope.isEditEnable = true;
+        }
+        else{
+            $scope.selectedId= selected.id;
+            $scope.isEditEnable = false;   
+        }
+        $scope.selected =selected;
+        delete $scope.selected["passports"];
+        delete $scope.selected["organization"];
+        delete $scope.selected["gravatarUrl"];
+    }
+
+    $scope.setEditable=function(newItem){
+        $scope.isEditEnable = true;
+        for (var property in newItem){
+            if ($scope.selected.hasOwnProperty(property)){
+                newItem[property] = $scope.selected[property];
+            }
+        }
+        $scope.selected=newItem;
+        delete $scope.selected["password"];
+        delete $scope.selected["password2"];
+
+    }
+    $scope.submitForm=function(){
+        if ($scope.selectedId && $scope.selectedId!=''){
+            $scope.updateSystemUser();
+        }
+        else{
+            $scope.addSystemUser();
+        }
+    }
+
+    $scope.getSystemUser = function() {
+        $http.get('/user?sort=id%20DESC&organization='+$routeParams.organizationID).then(function (res){
+            $scope.systemUsers = res.data;
+        });
+        return false;
+    }
+    $scope.updateSystemUser = function() {
+        var data = JSON.stringify($scope.selected);
+        $http.put('/user/'+$scope.selectedId,data).then(function (res){
+            $scope.getSystemUser(); 
+        });
+    }
+    $scope.deleteSystemUser = function() {
+        $http.delete('/user/'+$scope.selectedId).then(function (res){
+            $scope.getSystemUser();
+        });
+        return false;
+    }
+    $scope.addSystemUser = function() {
+        var data = JSON.stringify({
+            username: $scope.newSystemUser.username,
+            email: $scope.newSystemUser.email,
+            name: $scope.newSystemUser.name,
+            lastname:$scope.newSystemUser.lastname,
+            role: "user",
+            organization: $routeParams.organizationID,
+            passports: [{   "protocol" : "local",
+                            "password" : $scope.selected.password}]
+
+        });
+        $http.post('/register',data).success(function(data,status,headers,config){
+            if (status!=200){
+                console.log(data.error);
+            }
+        });
+    }
+    $scope.getSystemUser();
+})
+.controller('OrganizationCtrl', function($scope,$http,$location, $window) {
+    $scope.newOrganization = {
+        name: "",
+        webSite: "",
+        email: ""
+    };
+    $scope.selected = "";
+    $scope.selectedId="";
+    $scope.selectedEmail="";
+    $scope.isEditEnable = false;
+    $scope.select= function(selected){
+        if (!selected.id){
+            $scope.selectedId="";
+            for (var property in selected){
+            selected[property]= "";
+            }
+            $scope.isEditEnable = true;
+        }
+        else{
+            $scope.selectedId= selected.id;
+            $scope.selectedEmail= selected.email;           
+            $scope.isEditEnable = false;   
+        }
+        $scope.selected =selected;
+        delete $scope.selected["credentials"];
+        delete $scope.selected["regions"];
+    }
+
+    $scope.setEditable=function(newItem){
+        $scope.isEditEnable = true;
+        for (var property in newItem){
+            if ($scope.selected.hasOwnProperty(property)){
+                newItem[property] = $scope.selected[property];
+            }
+        }
+        $scope.selected=newItem;
+    }
+    $scope.submitForm=function(){
+        if ($scope.selectedId && $scope.selectedId!=''){
+            $scope.updateOrganization();
+        }
+        else{
+            $scope.addOrganization();
+        }
+    }
+
+    $scope.getOrganization = function() {
+        $http.get('/organization?sort=id%20DESC&').then(function (res){
+            $scope.organizations = res.data;
+        });
+        return false;
+    }
+    $scope.updateOrganization = function() {
+        var data = JSON.stringify($scope.selected);
+        $http.put('/organization/'+$scope.selectedId,data).then(function (res){
+            if($scope.selectedEmail != $scope.selected.email){
+                $window.location.href=('driveauth/'+$scope.selectedId);
+            }
+            $scope.getOrganization(); 
+        });
+    }
+    $scope.deleteOrganization = function() {
+        $http.delete('/organization/'+$scope.selectedId).then(function (res){
+            $scope.getOrganization();
+        });
+        return false;
+    }
+
+    $scope.addOrganization = function() {
+        var data = JSON.stringify($scope.newOrganization);
+        $http.post('/organization',data).success(function(data,status,headers,config){
+            if (data){
+                $window.location.href=('driveauth/'+data.id);
+            }
+            else if(data.error){
+                console.log(status + data.error)
+            }
+        });
+    }
+    $scope.getOrganization();
+})
 .controller('RegionCtrl', function($scope,$http,$location) {
 	$scope.newRegion = {
         name: "",
@@ -536,12 +721,17 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
 	$http.get('/configuration/'+$routeParams.configurationID).then(function (res){
         if (res.data){
 		  $scope.configuration = res.data;
+          delete $scope.configuration["device"];
+          delete $scope.configuration["createdAt"];
+          delete $scope.configuration["updatedAt"];
+          delete $scope.configuration["id"];
+          delete $scope.configuration["module"];
         }
 	});
 	return false;
 }
 	$scope.newAttribute = {};
-	$scope.configuration = {}
+	$scope.configuration = {};
     $scope.getConfiguration();
   	$scope.addAttribute = function(){
 		$scope.configuration[$scope.newAttribute.key]=$scope.newAttribute.value;
@@ -576,6 +766,10 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
     $http.get('/ModuleDataStructure/'+$routeParams.structureID).then(function (res){
         if(res.data){
             $scope.dataStructure = res.data;
+            delete $scope.dataStructure["createdAt"];
+            delete $scope.dataStructure["updatedAt"];
+            delete $scope.dataStructure["id"];
+            delete $scope.dataStructure["module"];
         }
     });
     return false;
@@ -617,7 +811,9 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
         delete $scope.selected["module"];
     }
 	$scope.getModuleData = function() {
-
+    $scope.getIframeSrc = function (videoId) {
+      return 'http://googledrive.com/host/' + videoId;
+    };
     $http.get('/moduleData/count?moduleID='+$routeParams.moduleID).then(function (resCount){
         $http.get('/moduleData?sort=id%20DESC&module='+$routeParams.moduleID+"&skip="+($scope.pagination.current-1)*$scope.dataPerPage+"&limit="+$scope.dataPerPage).then(function (res){
             $scope.totalReadings = resCount.data.count;
@@ -640,9 +836,59 @@ angular.module('cloudNestApp.logicalManagment', ['ngRoute','angularCountryState'
         $scope.getModuleData();
         console.log($scope.readings.length);
     };
-
-
+}).controller('DataVideoCtrl', function($scope,$http, $routeParams) {
+    $scope.selected = {};
+    $scope.selectedId="";
+    $scope.isEditEnable = false;
+    $('#enlargeModal').on('show.bs.modal', function (e) {
+         setTimeout(function(){
+            var myVideo = document.getElementsByTagName('video')[0];
+            myVideo.src = $scope.selected.url
+            myVideo.load();
+            }, 300);
+    });
+    $scope.select= function(selected){
+        $scope.selected =selected;
+        delete $scope.selected["module"];
+        $scope.selected.url="http://googledrive.com/host/"+selected.drive_id;
+        var myVideo = document.getElementsByTagName('video')[0];
+        myVideo.load();
+    }
+    $scope.getModuleData = function() {
+    $http.get('/moduleData/count?moduleID='+$routeParams.moduleID).then(function (resCount){
+        $http.get('/moduleData?sort=id%20DESC&module='+$routeParams.moduleID+"&skip="+($scope.pagination.current-1)*$scope.dataPerPage+"&limit="+$scope.dataPerPage).then(function (res){
+            $scope.totalReadings = resCount.data.count;
+            $scope.readings = res.data;
+        });
+    })
+    return false;
+    }
+    $scope.readings = [];
+    $scope.totalReadings = 0;
+    $scope.dataPerPage = 5;
+    $scope.pagination = {
+        current: 1
+    };
+    $scope.getModuleData();
+    $scope.showModal = function(modal){
+        $(modal).modal('show');
+        var myVideo = document.getElementsByTagName('video')[0];
+        myVideo.load();
+    }
+    $scope.pauseVideo= function(){
+        var myVideo = document.getElementsByTagName('video')[0];
+        myVideo.pause();
+    };
+    $scope.pageChanged = function(num) {
+        $scope.getModuleData();
+        console.log($scope.readings.length);
+    };
 }).
+filter("trustUrl", ['$sce', function ($sce) {
+        return function (recordingUrl) {
+            return recordingUrl;
+        };
+}]).
 filter('lat', function () {
     return function (input, decimals) {
         if (!decimals) decimals = 0;

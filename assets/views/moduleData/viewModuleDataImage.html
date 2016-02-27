@@ -15,14 +15,12 @@
   font-weight: 500;
 }
 </style>
-<div class="container-fluid search-header">
-	<div layout="row" layout-wrap>
-		<md-input-container flex="100" class="md-block">
-		<label>Registers per Page:</label>
-	    <input class="data-container" type="number" min="1" max="100" ng-model="dataPerPage">
-		</md-input-container>
-	</div>				
-</div>
+<div layout="row" layout-wrap>
+	<md-input-container flex="100" class="md-block">
+	<label>Registers per Page:</label>
+    <input class="data-container" type="number" min="1" max="100" ng-model="dataPerPage">
+	</md-input-container>
+</div>				
 <div class="container-fluid">
 	<div class="container">
 		<dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
@@ -49,23 +47,16 @@
           <h4 class="modal-title">Device Register</h4>
         </div>
 			<div class="modal-body">
-				<div class="container-fluid create-container">
-					<h2> Device details </h2>
-					<form class="create-form">
-					<div layout="row" layout-wrap>
+				<h2> Device details </h2>
+				<div layout="row" layout-wrap>
 					<div ng-repeat='(key, prop) in selected track by key' flex="50" flex-gt-sm="">
-						<md-input-container ng-show="isEditEnable" class="md-block" >
-					        <label>{{key}}</label>
-					        <input ng-model="selected[key]" type="text"  id="generalInput">
-					    </md-input-container>
-						<p ng-show="!isEditEnable" >{{key}} : {{prop}}</p>
+						<p >{{key}} : {{prop}}</p>
 					</div>
-					</div>
-					</form>
-					<button data-dismiss="modal" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-					  Close
-					</button>
 				</div>
+				</form>
+				<button data-dismiss="modal" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+				  Close
+				</button>
 			</div>
 		</div>
 	</div>
@@ -78,12 +69,10 @@
           <h4 class="modal-title">Image enlarged</h4>
         </div>
 			<div class="modal-body">
-				<div class="container-fluid create-container">
-					<img class="img-responsive" src="http://googledrive.com/host/{{selected.drive_id}}">
-					<button data-dismiss="modal" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-					  Close
-					</button>
-				</div>
+				<img class="img-responsive" src="http://googledrive.com/host/{{selected.drive_id}}">
+				<button data-dismiss="modal" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+				  Close
+				</button>
 			</div>
 		</div>
 	</div>

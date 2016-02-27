@@ -1,4 +1,3 @@
-<div class="container-fluid search-header">
 <div layout="row" layout-wrap>
 	<md-input-container flex="50" class="md-block">
 	  <label>Filter Modules:</label>
@@ -11,7 +10,6 @@
 		<md-icon class="material-icons">add</md-icon>
 	</md-button>
 </div>				
-</div>
 <div class="container-fluid">
 	<div layout="row" layout-wrap>
 	  <md-card flex-gt-sm="" ng-click="select(Module);showModal('#viewModal')" class="card col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="Module in deviceModules | filter:searchValue as results" >
@@ -47,28 +45,25 @@
           <h4 class="modal-title">Module Register</h4>
         </div>
 			<div class="modal-body">
-				<div class="container-fluid create-container">
-
-					<h2> Module details </h2>
-					<form class="create-form">
-					<div layout="row" layout-wrap>
-					<div ng-repeat='(key, prop) in selected track by key' flex="50" flex-gt-sm="">
-						<md-input-container ng-show="isEditEnable" class="md-block" >
-					        <label>{{key}}</label>
-					        <input ng-model="selected[key]" type="text"  id="generalInput">
-					    </md-input-container>
-						<p ng-show="!isEditEnable" >{{key}} : {{prop}}</p>
-					</div>
-					</div>
-					</form>
-					<button ng-show="!isEditEnable" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" ng-click="setEditable(newModule)" type="button">Edit</button>
-					<button ng-show="isEditEnable" data-dismiss="modal" ng-click="submitForm()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-					  Submit
-					</button>
-					<button data-dismiss="modal" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-					  Cancel
-					</button>
+				<h2> Module details </h2>
+				<form class="create-form">
+				<div layout="row" layout-wrap>
+				<div ng-repeat='(key, prop) in selected track by key' flex="50" flex-gt-sm="">
+					<md-input-container ng-show="isEditEnable" class="md-block" >
+				        <label>{{key}}</label>
+				        <input ng-model="selected[key]" type="text"  id="generalInput">
+				    </md-input-container>
+					<p ng-show="!isEditEnable" >{{key}} : {{prop}}</p>
 				</div>
+				</div>
+				</form>
+				<button ng-show="!isEditEnable" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" ng-click="setEditable(newModule)" type="button">Edit</button>
+				<button ng-show="isEditEnable" data-dismiss="modal" ng-click="submitForm()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+				  Submit
+				</button>
+				<button data-dismiss="modal" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+				  Cancel
+				</button>
 			</div>
 		</div>
 	</div>

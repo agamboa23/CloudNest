@@ -6,60 +6,55 @@
           <h4 class="modal-title">Spot Register</h4>
         </div>
 			<div class="modal-body">
-				<div class="container-fluid create-container">
+				<h2> Add a new Spot!</h2>
+				<form class="create-form">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input class="mdl-textfield__input" ng-model="newSpot.name" type="text" id="spotName">
+						<label class="mdl-textfield__label" for="spotName">Name:</label>
+					</div>
+				  	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input class="mdl-textfield__input" ng-model="newSpot.space" type="text" id="spotSpace">
+						<label class="mdl-textfield__label" for="spotName">Description:</label>
+					</div>
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input class="mdl-textfield__input" ng-model="newSpot.description" type="text" id="spotDescription">
+						<label class="mdl-textfield__label" for="spotName">Space:</label>
+					</div>
+					<h2> Geographic space: </h2>
+					<div class="text-right">
+					        <div class="input-append text-right">
+					            <input type="text" ng-model="search"/>
+					            <button  type="button" ng-click="geoCode()" ng-disabled="search.length == 0" title="search" >
+					              &nbsp;<i class="material-icons">search</i>
+					            </button>
+					            <button  type="button" ng-click="gotoCurrentLocation()" title="current location">
+					              &nbsp;<i class="material-icons">home</i>
+					            </button>
+					        </div>
+					    </div>
 
-					<h2> Add a new Spot!</h2>
-					<form class="create-form">
-						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-							<input class="mdl-textfield__input" ng-model="newSpot.name" type="text" id="spotName">
-							<label class="mdl-textfield__label" for="spotName">Name:</label>
-						</div>
-					  	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-							<input class="mdl-textfield__input" ng-model="newSpot.space" type="text" id="spotSpace">
-							<label class="mdl-textfield__label" for="spotName">Description:</label>
-						</div>
-						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-							<input class="mdl-textfield__input" ng-model="newSpot.description" type="text" id="spotDescription">
-							<label class="mdl-textfield__label" for="spotName">Space:</label>
-						</div>
-						<h2> Geographic space: </h2>
-						<div class="text-right">
-						        <div class="input-append text-right">
-						            <input type="text" ng-model="search"/>
-						            <button  type="button" ng-click="geoCode()" ng-disabled="search.length == 0" title="search" >
-						              &nbsp;<i class="material-icons">search</i>
-						            </button>
-						            <button  type="button" ng-click="gotoCurrentLocation()" title="current location">
-						              &nbsp;<i class="material-icons">home</i>
-						            </button>
-						        </div>
-						    </div>
+					    <!-- map -->
+					    <app-map style="height:400px;margin:12px;box-shadow:0 3px 25px black;"
+					        center="loc"
+					        pinpoint="pinpoint"
+					        control="gmap"
+					        zoom="5"
+					    > 
+					    </app-map>
 
-						    <!-- map -->
-						    <app-map style="height:400px;margin:12px;box-shadow:0 3px 25px black;"
-						        center="loc"
-						        pinpoint="pinpoint"
-						        control="gmap"
-						        zoom="5"
-						    > 
-						    </app-map>
+					    <!-- current location -->
+					    <div class="text-info text-right">
+					        {{loc.lat | lat:0}}, {{loc.lon | lon:0}}
+					    </div>
 
-						    <!-- current location -->
-						    <div class="text-info text-right">
-						        {{loc.lat | lat:0}}, {{loc.lon | lon:0}}
-						    </div>
-
-					</form>
-					<button data-dismiss="modal" ng-click="addSpot()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-					  Submit
-					</button>
-				</div>
-
+				</form>
+				<button data-dismiss="modal" ng-click="addSpot()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+				  Submit
+				</button>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="container-fluid search-header">
 <div layout="row" layout-wrap>
 	<md-input-container flex="50" class="md-block">
 	  <label>Filter spots:</label>
@@ -72,25 +67,22 @@
 		<md-icon class="material-icons">add</md-icon>
 	</md-button>
 </div>				
-</div>
-<div class="container-fluid">
-	<div layout="row" layout-wrap>
-	  <md-card flex-gt-sm="" ng-click="select(spot)"  class="card col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="spot in spots | filter:searchValue as results" >
-	    <md-card-title data-toggle="modal" data-target="#viewModal">
-	      <md-card-title-text>
-	        <span class="md-headline card-text">spot: {{spot.name}}</span>
-	       	<p class="card-text">Space: {{spot.space}}</p>
-	       	<p class="card-text">{{spot.description}}</p>
-	      </md-card-title-text>
-	    </md-card-title>
-	    <md-card-content data-toggle="modal" data-target="#viewModal">
-	    </md-card-content>
-	    <md-card-actions layout="row" class="card-bottom"  layout-align="end center">
-	      <md-button ng-click="go('devices','/devices/'+spot.id)">Open</md-button>
-	      <md-button data-toggle="modal" ng-click="select(spot)" data-target="#confirmDelete">Delete</md-button>
-	    </md-card-actions>
-	  </md-card>
-	</div>
+<div layout="row" layout-wrap>
+  <md-card flex-gt-sm="" ng-click="select(spot)"  class="card col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="spot in spots | filter:searchValue as results" >
+    <md-card-title data-toggle="modal" data-target="#viewModal">
+      <md-card-title-text>
+        <span class="md-headline card-text">spot: {{spot.name}}</span>
+       	<p class="card-text">Space: {{spot.space}}</p>
+       	<p class="card-text">{{spot.description}}</p>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content data-toggle="modal" data-target="#viewModal">
+    </md-card-content>
+    <md-card-actions layout="row" class="card-bottom"  layout-align="end center">
+      <md-button ng-click="go('devices','/devices/'+spot.id)">Open</md-button>
+      <md-button data-toggle="modal" ng-click="select(spot)" data-target="#confirmDelete">Delete</md-button>
+    </md-card-actions>
+  </md-card>
 </div>
 
 <div class="modal fade" id="viewModal" role="dialog">
@@ -101,56 +93,53 @@
           <h4 class="modal-title">spot Register</h4>
         </div>
 			<div class="modal-body">
-				<div class="container-fluid create-container">
-
-					<h2> spot details </h2>
-					<form class="create-form">
-					<div layout="row" layout-wrap>
-						<div ng-repeat='(key, prop) in selected track by key' flex="50" flex-gt-sm="">
-							<md-input-container ng-show="isEditEnable" class="md-block" >
-						        <label>{{key}}</label>
-						        <input ng-model="selected[key]" type="text"  id="generalInput">
-						    </md-input-container>
-							<p ng-show="!isEditEnable" >{{key}} : {{prop}}</p>
+				<h2> spot details </h2>
+				<form class="create-form">
+				<div layout="row" layout-wrap>
+					<div ng-repeat='(key, prop) in selected track by key' flex="50" flex-gt-sm="">
+						<md-input-container ng-show="isEditEnable" class="md-block" >
+					        <label>{{key}}</label>
+					        <input ng-model="selected[key]" type="text"  id="generalInput">
+					    </md-input-container>
+						<p ng-show="!isEditEnable" >{{key}} : {{prop}}</p>
+					</div>
+					<div flex="100">
+						<h2> Geographic space: </h2>
+						<div class="text-right">
+						    <div class="input-append text-right">
+						        <input type="text" ng-model="search"/>
+						        <button  type="button" ng-click="geoCode()" ng-disabled="search.length == 0" title="search" >
+						          &nbsp;<i class="material-icons">search</i>
+						        </button>
+						        <button  type="button" ng-click="gotoCurrentLocation()" title="current location">
+						          &nbsp;<i class="material-icons">home</i>
+						        </button>
+						    </div>
 						</div>
-						<div flex="100">
-							<h2> Geographic space: </h2>
-							<div class="text-right">
-							    <div class="input-append text-right">
-							        <input type="text" ng-model="search"/>
-							        <button  type="button" ng-click="geoCode()" ng-disabled="search.length == 0" title="search" >
-							          &nbsp;<i class="material-icons">search</i>
-							        </button>
-							        <button  type="button" ng-click="gotoCurrentLocation()" title="current location">
-							          &nbsp;<i class="material-icons">home</i>
-							        </button>
-							    </div>
-							</div>
 
-							<!-- map -->
-							<app-map style="height:400px;margin:12px;box-shadow:0 3px 25px black;"
-							    center="loc"
-							    pinpoint="pinpoint"
-							    control="gmap"
-							    zoom="5"
-							> 
-							</app-map>
+						<!-- map -->
+						<app-map style="height:400px;margin:12px;box-shadow:0 3px 25px black;"
+						    center="loc"
+						    pinpoint="pinpoint"
+						    control="gmap"
+						    zoom="5"
+						> 
+						</app-map>
 
-							<!-- current location -->
-							<div class="text-info text-right">
-							    {{loc.lat | lat:0}}, {{loc.lon | lon:0}}
-							</div>
+						<!-- current location -->
+						<div class="text-info text-right">
+						    {{loc.lat | lat:0}}, {{loc.lon | lon:0}}
 						</div>
 					</div>
-					</form>
-					<button ng-show="!isEditEnable" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" ng-click="setEditable(newSpot)" type="button">Edit</button>
-					<button ng-show="isEditEnable" data-dismiss="modal" ng-click="submitForm()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-					  Submit
-					</button>
-					<button data-dismiss="modal" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-					  Cancel
-					</button>
 				</div>
+				</form>
+				<button ng-show="!isEditEnable" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" ng-click="setEditable(newSpot)" type="button">Edit</button>
+				<button ng-show="isEditEnable" data-dismiss="modal" ng-click="submitForm()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+				  Submit
+				</button>
+				<button data-dismiss="modal" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+				  Cancel
+				</button>
 			</div>
 		</div>
 	</div>

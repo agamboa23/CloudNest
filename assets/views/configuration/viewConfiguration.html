@@ -1,31 +1,36 @@
-<button class="btn btn-primary pull-right btn-sm RbtnMargin" ng-click="getLocations()" type="button">refresh</button>
-<button class="btn btn-primary pull-right btn-sm"  type="button">Edit</button>
 <div class="container-fluid">
 	<div class="row">
 		<div class="panel panel-default" >
 		  <div class="panel-heading">Current Configuration</div>
 		  <div class="panel-body">
-		    <div ng-repeat='(key, prop) in configuration track by key'>
-			    <p>{{key}} : {{prop}}</p>
-			    <input ng-show="isEditFormOpen" id="editForm" type='text' ng-model='configuration[key]'>
-				<button ng-show="isEditFormOpen" class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" ng-click="removeAttribute(key)">
-					<i class="material-icons">close</i>
-				</button>
+		  <div ng-repeat='(key, prop) in configuration track by key'>
+			    <div layout="row" layout-wrap>
+					<md-button ng-show="isEditFormOpen" class="md-fab" ng-click="removeAttribute(key)">
+						<md-icon class="material-icons">close</md-icon>
+					</md-button>
+	    			<md-input-container ng-show="isEditFormOpen" class="md-block" >
+				        <label>{{key}}</label>
+				        <input ng-model="configuration[key]" type="text"  id="generalInput">
+				    </md-input-container>
+					<p ng-show="!isEditFormOpen" >{{key}} : {{prop}}</p>			
+				</div>
 			</div>
 				<div ng-show="isEditFormOpen">
-				new Attributes:
-				<input type='text' ng-model='newAttribute.key'>
-				<input type='text' ng-model='newAttribute.value'>
-				<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" ng-click="addAttribute()">
-				  <i class="material-icons">add</i>
-				</button>
-		 	</div>
+					<div layout="row" layout-wrap>
+						<md-button ng-show="isEditFormOpen" class="md-fab md-primary" ng-click="addAttribute()">
+							<md-icon class="material-icons">add</md-icon>
+						</md-button>
+						<md-input-container class="md-block">
+					        <label>New Attribute</label>
+					        <input ng-model="newAttribute.key" type="text"  id="generalInput">
+					    </md-input-container>
+			 		</div>
+			 	</div>
 		  </div>
-		  <div class="panel-footer">
-			  <button ng-show="isEditFormOpen" data-dismiss="modal" ng-click="setConfiguration()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"> Update
-				</button>
-			  <button class="btn btn-primary btn-xs" ng-click="isEditFormOpen = !isEditFormOpen" type="button">Change or Delete</button>
-		  </div>
+		  <button ng-show="isEditFormOpen" data-dismiss="modal" ng-click="setConfiguration()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"> Update
+			</button>
+		  <button ng-click="isEditFormOpen = !isEditFormOpen" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"> Edit
+			</button>
 		</div>
 	</div>
 </div>

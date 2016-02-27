@@ -10,6 +10,14 @@ module.exports = {
       index: true,
       notNull: true
     },
+    name:{
+      type:'string',
+      required: true
+    },
+    lastname: {
+      type: 'string',
+      required: true
+    },
     email: {
       type: 'email',
       unique: true,
