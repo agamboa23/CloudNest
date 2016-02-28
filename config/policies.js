@@ -36,6 +36,9 @@ module.exports.policies = {
   },
   InterfaceController: {
     '*':true
+  },
+  GoogleDriveController: {
+  'getResumableUploadLocation':true
   }
   /***************************************************************************
   *                                                                          *
