@@ -1,3 +1,6 @@
+<h1>
+<a href="http://cloudnest.herokuapp.com/"><img alt="Sails.js logo" src="http://s7.postimg.org/4nnlngbjf/logo.png" title="Sails.js"/></a>
+</h1>
 
 # CloudNest 
 
