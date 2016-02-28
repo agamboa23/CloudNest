@@ -63,8 +63,8 @@ The device configuration can be set and accesed remotly from the own device. For
 
 | Method | Http Request |   Description |
 | ------ | ----------- | ---|
-| Get Device Configuration | GET  https://cloudnest.herokuapp.com/getDeviceConfiguration/`deviceKey` | Gets the configuration set for that specific Device
-| Set Device Configuration | POST https://cloudnest.herokuapp.com/setDeviceConfiguration/`deviceKey` Request Body: <br>  &nbsp;&nbsp;Custom Attribute1: Value1 <br> &nbsp;&nbsp;Custom Attribute2: Value2 <br>&nbsp;&nbsp;...<br> | Creates or overwrites the configuration for a given device.
+| Get Device Configuration | GET  https://<i></i>cloudnest.herokuapp.<i></i>com/getDeviceConfiguration/`deviceKey` | Gets the configuration set for that specific Device
+| Set Device Configuration | POST https://<i></i>cloudnest.herokuapp.<i></i>com/setDeviceConfiguration/`deviceKey` Request Body: <br>  &nbsp;&nbsp;Custom Attribute1: Value1 <br> &nbsp;&nbsp;Custom Attribute2: Value2 <br>&nbsp;&nbsp;...<br> | Creates or overwrites the configuration for a given device.
 
 ### Module 
 
@@ -72,8 +72,8 @@ The module configuration can be set and accesed remotly from the own device. For
 
 | Method | Http Request |   Description |
 | ------ | ----------- | ---|
-| Get Module Configuration | GET  https://cloudnest.herokuapp.com/getModuleConfiguration/`moduleKey` | Gets the configuration set for that specific Module
-| Set Module Configuration | POST https://cloudnest.herokuapp.com/setModuleConfiguration/`moduleKey` Request Body: <br>  &nbsp;&nbsp;Custom Attribute1: Value1 <br> &nbsp;&nbsp;Custom Attribute2: Value2 <br>&nbsp;&nbsp;...<br> | Creates or overwrites the configuration for a given module.
+| Get Module Configuration | GET  https://<i></i>cloudnest.herokuapp.<i></i>com/getModuleConfiguration/`moduleKey` | Gets the configuration set for that specific Module
+| Set Module Configuration | POST https://<i></i>cloudnest.herokuapp<i></i>.com/setModuleConfiguration/`moduleKey` Request Body: <br>  &nbsp;&nbsp;Custom Attribute1: Value1 <br> &nbsp;&nbsp;Custom Attribute2: Value2 <br>&nbsp;&nbsp;...<br> | Creates or overwrites the configuration for a given module.
 
 ### Data Post 
 
@@ -84,8 +84,8 @@ For both operations, the Module-Key is required.
 
 | Method | Http Request |   Description |
 | ------ | ----------- | ---|
-| Post Data | Post  https://cloudnest.herokuapp.com/postdata/`moduleKey` Request Body: <br>&nbsp;&nbsp;readingTime: `dateTime` <br>&nbsp;&nbsp;data: `dataValue` <br>  &nbsp;&nbsp;Custom Attribute1: Value1 <br> &nbsp;&nbsp;Custom Attribute2: Value2 <br>&nbsp;&nbsp;...<br> | Post data related to a specific module.
-| Upload request | POST https://cloudnest.herokuapp.com/getResumableUploadLocation/`deviceKey` Request Body: <br>&nbsp;&nbsp;uploadContentLength: `contentLength` <br>&nbsp;&nbsp;uploadContentType: `MIME/contentType` <br>&nbsp;&nbsp;uploadTitle: `title` <br>  &nbsp;&nbsp;Custom Attribute1: Value1 <br> &nbsp;&nbsp;Custom Attribute2: Value2 <br>&nbsp;&nbsp;...<br>  | Post metadata related with a file to be uploaded. The request responds  a Location with the Google Drive resumable upload location. For more information about the file upload, please visit: [Google Drive API Reference: Resumable Upload].
+| Post Data | POST https://<i></i>cloudnest.herokuapp.<i></i>com/postdata/`moduleKey` <br>Request Body: <br>&nbsp;&nbsp;readingTime: `dateTime` <br>&nbsp;&nbsp;data: `dataValue` <br>  &nbsp;&nbsp;Custom Attribute1: Value1 <br> &nbsp;&nbsp;Custom Attribute2: Value2 <br>&nbsp;&nbsp;...<br> | Post data related to a specific module.
+| Upload request | POST https://<i></i>cloudnest.herokuapp.<i></i>com/getResumableUploadLocation/`deviceKey` Request Body: <br>&nbsp;&nbsp;uploadContentLength: `contentLength` <br>&nbsp;&nbsp;uploadContentType: `MIME/contentType` <br>&nbsp;&nbsp;uploadTitle: `title` <br>  &nbsp;&nbsp;Custom Attribute1: Value1 <br> &nbsp;&nbsp;Custom Attribute2: Value2 <br>&nbsp;&nbsp;...<br>  | Post metadata related with a file to be uploaded. The request responds  a Location with the Google Drive resumable upload location. For more information about the file upload, please visit: [Google Drive API Reference: Resumable Upload].
 
 ## Contributors
 
