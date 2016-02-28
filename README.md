@@ -60,6 +60,7 @@ The development of monitoring systems from different projects presents a big cha
 ### Device 
 
 The device configuration can be set and accesed remotly from the own device. For these operations, the Device-Key is required. 
+
 | Method | Http Request |   Description |
 | ------ | ----------- | ---|
 | Get Device Configuration | GET  https://cloudnest.herokuapp.com/getDeviceConfiguration/`deviceKey` | Gets the configuration set for that specific Device
@@ -68,6 +69,7 @@ The device configuration can be set and accesed remotly from the own device. For
 ### Module 
 
 The module configuration can be set and accesed remotly from the own device. For these operations, the Module-Key is required. 
+
 | Method | Http Request |   Description |
 | ------ | ----------- | ---|
 | Get Module Configuration | GET  https://cloudnest.herokuapp.com/getModuleConfiguration/`moduleKey` | Gets the configuration set for that specific Module
