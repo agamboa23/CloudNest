@@ -85,7 +85,7 @@ For both operations, the Module-Key is required.
 | Method | Http Request |   Description |
 | ------ | ----------- | ---|
 | Post Data | POST https://<i></i>cloudnest.herokuapp.<i></i>com/postdata/`moduleKey` <br>Request Body: <br>&nbsp;&nbsp;readingTime: `dateTime` <br>&nbsp;&nbsp;data: `dataValue` <br>  &nbsp;&nbsp;Custom Attribute1: Value1 <br> &nbsp;&nbsp;Custom Attribute2: Value2 <br>&nbsp;&nbsp;...<br> | Post data related to a specific module.
-| Upload request | POST https://<i></i>cloudnest.herokuapp.<i></i>com/getResumableUploadLocation/`deviceKey` Request Body: <br>&nbsp;&nbsp;uploadContentLength: `contentLength` <br>&nbsp;&nbsp;uploadContentType: `MIME/contentType` <br>&nbsp;&nbsp;uploadTitle: `title` <br>  &nbsp;&nbsp;Custom Attribute1: Value1 <br> &nbsp;&nbsp;Custom Attribute2: Value2 <br>&nbsp;&nbsp;...<br>  | Post metadata related with a file to be uploaded. The request responds  a Location with the Google Drive resumable upload location. For more information about the file upload, please visit: [Google Drive API Reference: Resumable Upload].
+| Upload request | POST https://<i></i>cloudnest.herokuapp.<i></i>com/getResumableUploadLocation/`moduleKey` Request Body: <br>&nbsp;&nbsp;uploadContentLength: `contentLength` <br>&nbsp;&nbsp;uploadContentType: `MIME/contentType` <br>&nbsp;&nbsp;uploadTitle: `title` <br>  &nbsp;&nbsp;Custom Attribute1: Value1 <br> &nbsp;&nbsp;Custom Attribute2: Value2 <br>&nbsp;&nbsp;...<br>  | Post metadata related with a file to be uploaded. The request responds  a Location with the Google Drive resumable upload location. For more information about the file upload, please visit: [Google Drive API Reference: Resumable Upload].
 
 ## Contributors
 
